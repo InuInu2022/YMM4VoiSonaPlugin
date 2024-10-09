@@ -1,0 +1,3 @@
+[submodule "libs/SonaBridge"]
+	path = libs/SonaBridge
+	url = https://github.com/InuInu2022/SonaBridge.git
