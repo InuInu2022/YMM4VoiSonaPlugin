@@ -2,6 +2,7 @@
   <PropertyGroup>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
+
   <ItemGroup>
     <!-- README -->
     <Content Include="../../README.md">
@@ -14,6 +15,9 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
+    <!-- exclude -->
+    <ExcludeFromPublish Include="**\*.pdb" />
+    <ExcludeFromPublish Include="**\*.xml" />
     <!-- YMM4 plugins -->
     <Reference Include="$(YMM4_PATH)\YukkuriMovieMaker.Plugin.dll" />
     <Reference Include="$(YMM4_PATH)\YukkuriMovieMaker.Controls.dll" />

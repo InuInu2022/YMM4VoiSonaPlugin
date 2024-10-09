@@ -46,6 +46,8 @@
     <PathMap>$(RepoRoot)=$(DeterministicSourceRoot)</PathMap>
 
     <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup
      Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
