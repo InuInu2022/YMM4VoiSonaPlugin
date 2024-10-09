@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1006A2DD-741
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YMM4VoiSonaPlugin", "src\YMM4VoiSonaPlugin\YMM4VoiSonaPlugin.csproj", "{DD663A2C-EBE5-44C8-9CFA-37C18B3445A5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{BDDBF0CA-020B-48FF-80E5-2170AF390012}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginTest", "tests\PluginTest\PluginTest.csproj", "{3F9468C6-A974-4F7E-8F58-4FC08EDB8BA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +24,13 @@ Global
 		{DD663A2C-EBE5-44C8-9CFA-37C18B3445A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD663A2C-EBE5-44C8-9CFA-37C18B3445A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD663A2C-EBE5-44C8-9CFA-37C18B3445A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F9468C6-A974-4F7E-8F58-4FC08EDB8BA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F9468C6-A974-4F7E-8F58-4FC08EDB8BA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F9468C6-A974-4F7E-8F58-4FC08EDB8BA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F9468C6-A974-4F7E-8F58-4FC08EDB8BA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DD663A2C-EBE5-44C8-9CFA-37C18B3445A5} = {1006A2DD-7416-4CA1-A846-83D6CCEA7F6C}
+		{3F9468C6-A974-4F7E-8F58-4FC08EDB8BA4} = {BDDBF0CA-020B-48FF-80E5-2170AF390012}
 	EndGlobalSection
 EndGlobal
