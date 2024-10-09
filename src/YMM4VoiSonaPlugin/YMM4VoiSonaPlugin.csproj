@@ -3,8 +3,38 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
   <ItemGroup>
+    <!-- README -->
+    <Content Include="../../README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Include="../../LICENSE">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+
     <!-- YMM4 plugins -->
     <Reference Include="$(YMM4_PATH)\YukkuriMovieMaker.Plugin.dll" />
     <Reference Include="$(YMM4_PATH)\YukkuriMovieMaker.Controls.dll" />
   </ItemGroup>
+
+  <Target Name="RemovePublishDirBeforeBuild" BeforeTargets="BeforeBuild">
+    <RemoveDir Directories="$(OutputPath)/publish/" />
+    <Message Text="RemovePublishDirBeforeBuild" Importance="high" />
+  </Target>
+  <Target Name="MakeZipPackage" AfterTargets="Publish">
+    <MakeDir Directories="$(OutputPath)/../../../../../publish/" />
+    <Delete Files="$(OutputPath)/$(AssemblyName).pdb" />
+    <Delete Files="$(OutputPath)/*.pdb" />
+    <Delete Files="$(OutputPath)/publish/$(AssemblyName).pdb" />
+    <Delete Files="$(OutputPath)/publish/*.pdb" />
+    <Delete Files="$(OutputPath)/publish/*.xml" />
+    <ZipDirectory
+      SourceDirectory="$(OutputPath)/publish/"
+      DestinationFile="$(OutputPath)/../../../../../publish/$(AssemblyName).ymme"
+      Overwrite="true" />
+    <Message Text="Actions After Publish" Importance="high" />
+  </Target>
 </Project>
