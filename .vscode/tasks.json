@@ -1,0 +1,18 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "publish",
+			"command": "dotnet",
+			"type": "process",
+			"args": [
+				"publish",
+				"${workspaceFolder}/src/YMM4VoiSonaPlugin/YMM4VoiSonaPlugin.csproj",
+				"/property:GenerateFullPaths=true",
+				"/property:Configuration=Release",
+				"/p:RunAnalyzers=false"
+			],
+			"problemMatcher": "$msCompile"
+		},
+	]
+}
