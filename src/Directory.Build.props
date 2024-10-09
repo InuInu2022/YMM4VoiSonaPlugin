@@ -31,7 +31,7 @@
     <RepositoryType>git</RepositoryType>
 
     <!-- AssemblyInfo プロパティ -->
-    <AssemblyTitle>KotoKanade</AssemblyTitle>
+    <AssemblyTitle>YMM4VoiSonaPlugin</AssemblyTitle>
     <SupportedCultures>en-US;ja</SupportedCultures>
     <!-- MinVer -->
     <MinVerTagPrefix>v</MinVerTagPrefix>
