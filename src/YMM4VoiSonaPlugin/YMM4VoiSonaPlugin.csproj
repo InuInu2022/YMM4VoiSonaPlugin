@@ -14,12 +14,13 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
-
     <!-- YMM4 plugins -->
     <Reference Include="$(YMM4_PATH)\YukkuriMovieMaker.Plugin.dll" />
     <Reference Include="$(YMM4_PATH)\YukkuriMovieMaker.Controls.dll" />
   </ItemGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="..\..\libs\SonaBridge\src\SonaBridge\SonaBridge.csproj" />
+  </ItemGroup>
   <Target Name="RemovePublishDirBeforeBuild" BeforeTargets="BeforeBuild">
     <RemoveDir Directories="$(OutputPath)/publish/" />
     <Message Text="RemovePublishDirBeforeBuild" Importance="high" />
@@ -36,5 +37,13 @@
       DestinationFile="$(OutputPath)/../../../../../publish/$(AssemblyName).ymme"
       Overwrite="true" />
     <Message Text="Actions After Publish" Importance="high" />
+
+    <Delete Files="$(YMM4_PATH)\user\plugin\$(AssemblyName)\*" />
+    <Copy
+      SourceFiles="$(OutputPath)/../../../../../publish/$(AssemblyName).ymme"
+      DestinationFolder="$(YMM4_PATH)\user\plugin\"
+      />
+    <Unzip
+      SourceFiles="$(OutputPath)/../../../../../publish/$(AssemblyName).ymme" DestinationFolder="$(YMM4_PATH)\user\plugin\$(AssemblyName)\" />
   </Target>
 </Project>

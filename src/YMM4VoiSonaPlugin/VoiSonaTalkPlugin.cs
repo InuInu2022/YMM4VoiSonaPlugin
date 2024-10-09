@@ -3,18 +3,19 @@ namespace YMM4VoiSonaPlugin;
 
 public sealed class VoiSonaTalkPlugin : IVoicePlugin
 {
-	public IEnumerable<IVoiceSpeaker> Voices { get; }
-	public bool CanUpdateVoices { get; }
-	public bool IsVoicesCached { get; }
+	public IEnumerable<IVoiceSpeaker> Voices
+		=> VoiSonaTalkSettings
+			.Default
+			.Speakers
+			.Select(v => new VoiSonaTalkSpeaker(v));
+	public bool CanUpdateVoices { get; } = true;
+	public bool IsVoicesCached => VoiSonaTalkSettings.Default.IsCached;
 	public string Name => "YMM4 VoiSona Talk プラグイン";
 
 	public VoiSonaTalkPlugin()
 	{
-		Voices = [];
 	}
 
 	public Task UpdateVoicesAsync()
-	{
-		throw new NotImplementedException();
-	}
+		=> VoiSonaTalkSettings.Default.UpdateSpeakersAsync();
 }
