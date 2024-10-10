@@ -15,7 +15,7 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
-    <Content Include="../../licenses/**">
+    <Content Include="../../licenses/**" LinkBase="licenses/">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
@@ -32,12 +32,32 @@
   </ItemGroup>
   <Target Name="RemovePublishDirBeforeBuild" BeforeTargets="BeforeBuild">
     <RemoveDir Directories="$(OutputPath)/publish/" />
+    <RemoveDir Directories="$(YMM4_PATH)\user\plugin\$(AssemblyName)\"/>
     <Message Text="RemovePublishDirBeforeBuild" Importance="high" />
   </Target>
   <Target Name="MakeZipPackage" AfterTargets="Publish">
     <MakeDir Directories="$(OutputPath)/../../../../../publish/" />
+
+    <ItemGroup>
+      <FilesToDelete Include="$(OutputPath)\publish\Vortice.*.dll"/>
+      <FilesToDelete Include="$(OutputPath)\publish\NCalc.*.dll"/>
+      <FilesToDelete Include="$(OutputPath)\publish\Newtonsoft.Json.dll"/>
+      <FilesToDelete Include="$(OutputPath)\publish\Microsoft.*.dll"/>
+      <FilesToDelete Include="$(OutputPath)\publish\MathNet.Numerics.dll"/>
+      <FilesToDelete Include="$(OutputPath)\publish\WinRT.Runtime.dll"/>
+      <FilesToDelete Include="$(OutputPath)\publish\Parlot.dll"/>
+      <FilesToDelete Include="$(OutputPath)\publish\ExtendedNumerics.BigDecimal.dll"/>
+      <FilesToDelete Include="$(OutputPath)\publish\SharpGen.*.dll"/>
+      <FilesToDelete Include="$(OutputPath)\publish\System.*.dll"/>
+      <FilesToDelete Include="$(OutputPath)\publish\ICSharpCode.AvalonEdit.dll"/>
+
+      <FilesToDelete Include="$(OutputPath)\publish\YukkuriMovieMaker.*.dll"/>
+
+
+    </ItemGroup>
     <Delete Files="$(OutputPath)/$(AssemblyName).pdb" />
     <Delete Files="$(OutputPath)/*.pdb" />
+    <Delete Files="$(OutputPath)/**/*.pdb" />
     <Delete Files="$(OutputPath)/publish/$(AssemblyName).pdb" />
     <Delete Files="$(OutputPath)\publish\*.pdb" />
     <Delete Files="$(OutputPath)\publish\*.xml" />
@@ -46,7 +66,17 @@
     <Delete Files="$(OutputPath)/publish/SonaBridge.Core.Common.pdb" />
     <Delete Files="$(OutputPath)/publish/SonaBridge.Core.Win.pdb" />
     <Delete Files="$(OutputPath)/publish/YukkuriMovieMaker.Plugin.pdb" />
+    <Delete Files="$(OutputPath)/publish/YukkuriMovieMaker.Plugin.dll" />
     <Delete Files="$(OutputPath)/publish/YukkuriMovieMaker.Controls.pdb" />
+    <Delete Files="$(OutputPath)/publish/YukkuriMovieMaker.Controls.dll" />
+    <Delete Files="$(OutputPath)/publish/YukkuriMovieMaker.*.dll" />
+    <Delete Files="@(FilesToDelete)">
+       <Output
+          TaskParameter="DeletedFiles"
+          ItemName="FilesDeleted"/>
+     </Delete>
+
+
 
     <ZipDirectory
       SourceDirectory="$(OutputPath)/publish/"
@@ -54,7 +84,6 @@
       Overwrite="true" />
     <Message Text="Actions After Publish" Importance="high" />
 
-    <Delete Files="$(YMM4_PATH)\user\plugin\$(AssemblyName)\*" />
     <Copy
       SourceFiles="$(OutputPath)/../../../../../publish/$(AssemblyName).ymme"
       DestinationFolder="$(YMM4_PATH)\user\plugin\"
