@@ -22,6 +22,13 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 	//TODO: cast data json
 	public IVoiceResource? Resource => null;
 
+	//TODO: ボイス毎の制作者指定
+	public string? SpeakerAuthor { get; }
+	//TODO: ボイス毎のニコニコID指定（あれば）
+	public string? SpeakerContentId { get; }
+	public string? EngineAuthor { get; } = "Techno-Speech, Inc.";
+	public string? EngineContentId { get; }
+
 	static readonly SemaphoreSlim Semaphore = new(1);
 	readonly ITalkAutoService _service;
 
@@ -34,10 +41,11 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 		_service = provider.GetService<ITalkAutoService>();
 	}
 
-	public Task<string> ConvertKanjiToYomiAsync(string text, IVoiceParameter voiceParameter)
+	public async Task<string> ConvertKanjiToYomiAsync(string text, IVoiceParameter voiceParameter)
 	{
 		//TODO: get yomi from vs talk
-		return Task.FromException<string>(new NotSupportedException());
+		return await Task.Run(()=>text);
+		//return Task.FromException<string>(new NotSupportedException());
 	}
 
 	public async Task<IVoicePronounce?> CreateVoiceAsync(
