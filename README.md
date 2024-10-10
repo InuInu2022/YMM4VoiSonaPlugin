@@ -28,4 +28,17 @@ YMM4のボイスとして **「VoiSona Talk」(ボイソナトーク)** を使�
 - セリフのプリセット対応
 - セリフのスタイル対応
 
-# License
+### 対応予定なし
+
+― 辞書登録
+
+### 対応未定
+
+- アクセント、STY、VOL、PIT、ALP、HUS
+
+## License
+
+- [/licenses](./licenses/)
+  - SonaBridge - MIT
+  - FlaUI - MIT
+  - SharpHook
