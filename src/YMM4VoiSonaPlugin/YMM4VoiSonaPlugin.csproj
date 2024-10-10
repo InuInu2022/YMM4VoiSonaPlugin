@@ -50,8 +50,10 @@
       <FilesToDelete Include="$(OutputPath)\publish\SharpGen.*.dll"/>
       <FilesToDelete Include="$(OutputPath)\publish\System.*.dll"/>
       <FilesToDelete Include="$(OutputPath)\publish\ICSharpCode.AvalonEdit.dll"/>
+      <FilesToDelete Include="$(OutputPath)\publish\runtimes\win\lib\**\System.Management.dll"/>
 
       <FilesToDelete Include="$(OutputPath)\publish\YukkuriMovieMaker.*.dll"/>
+      <FilesToDelete Include="$(OutputPath)\publish\YukkuriMovieMaker.*.pdb"/>
 
 
     </ItemGroup>
