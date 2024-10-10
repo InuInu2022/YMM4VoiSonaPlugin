@@ -15,7 +15,10 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 	public bool IsVoiceDataCachingRequired => true;
 	//TODO: support english voice
 	public SupportedTextFormat Format => SupportedTextFormat.Text;
-	public IVoiceLicense? License => null;
+	public IVoiceLicense? License
+		=> new VoiSonaTalkVoiceLicense(
+			//TODO: add term url by voice
+		);
 	//TODO: cast data json
 	public IVoiceResource? Resource => null;
 
