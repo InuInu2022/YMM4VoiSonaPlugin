@@ -34,8 +34,15 @@
     <Delete Files="$(OutputPath)/$(AssemblyName).pdb" />
     <Delete Files="$(OutputPath)/*.pdb" />
     <Delete Files="$(OutputPath)/publish/$(AssemblyName).pdb" />
-    <Delete Files="$(OutputPath)/publish/*.pdb" />
-    <Delete Files="$(OutputPath)/publish/*.xml" />
+    <Delete Files="$(OutputPath)\publish\*.pdb" />
+    <Delete Files="$(OutputPath)\publish\*.xml" />
+    <Delete Files="$(OutputPath)/publish/SonaBridge.pdb" />
+    <Delete Files="$(OutputPath)/publish/SonaBridge.xml" />
+    <Delete Files="$(OutputPath)/publish/SonaBridge.Core.Common.pdb" />
+    <Delete Files="$(OutputPath)/publish/SonaBridge.Core.Win.pdb" />
+    <Delete Files="$(OutputPath)/publish/YukkuriMovieMaker.Plugin.pdb" />
+    <Delete Files="$(OutputPath)/publish/YukkuriMovieMaker.Controls.pdb" />
+
     <ZipDirectory
       SourceDirectory="$(OutputPath)/publish/"
       DestinationFile="$(OutputPath)/../../../../../publish/$(AssemblyName).ymme"
