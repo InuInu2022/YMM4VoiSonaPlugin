@@ -1,3 +1,6 @@
 [submodule "libs/SonaBridge"]
 	path = libs/SonaBridge
 	url = https://github.com/InuInu2022/SonaBridge.git
+[submodule "libs/YmmeUtil"]
+	path = libs/YmmeUtil
+	url = https://github.com/InuInu2022/YmmeUtil.git
