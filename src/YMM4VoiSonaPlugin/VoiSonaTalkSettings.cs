@@ -13,8 +13,9 @@ public partial class VoiSonaTalkSettings : SettingsBase<VoiSonaTalkSettings>
 	public override SettingsCategory Category
 		=> SettingsCategory.Voice;
 	public override string Name => "VoiSona Talk ボイス設定";
-	public override bool HasSettingView => false;
-	public override object? SettingView => throw new NotSupportedException();
+	public override bool HasSettingView => true;
+	public override object? SettingView
+		=> new VoiSonaTalkSettings();
 
 	public bool IsCached
 	{

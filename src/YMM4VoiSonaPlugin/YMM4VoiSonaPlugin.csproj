@@ -36,6 +36,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\libs\SonaBridge\src\SonaBridge\SonaBridge.csproj" />
     <ProjectReference Include="..\..\libs\YmmeUtil\src\YmmeUtil.Common\YmmeUtil.Common.csproj" />
+    <ProjectReference Include="..\YMM4VoiSonaPlugin.Settings\YMM4VoiSonaPlugin.Settings.csproj" />
   </ItemGroup>
   <Target Name="RemovePublishDirBeforeBuild" BeforeTargets="BeforeBuild">
     <RemoveDir Directories="$(OutputPath)/publish/" />
