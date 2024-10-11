@@ -24,8 +24,14 @@
     <ExcludeFromPublish Include="**\*.pdb" />
     <ExcludeFromPublish Include="**\*.xml" />
     <!-- YMM4 plugins -->
-    <Reference Include="$(YMM4_PATH)\YukkuriMovieMaker.Plugin.dll" />
-    <Reference Include="$(YMM4_PATH)\YukkuriMovieMaker.Controls.dll" />
+    <Reference Include="$(YMM4_PATH)\YukkuriMovieMaker.Plugin.dll">
+      <Private>false</Private>
+      <CopyLocal>false</CopyLocal>
+    </Reference>
+    <Reference Include="$(YMM4_PATH)\YukkuriMovieMaker.Controls.dll">
+      <Private>false</Private>
+      <CopyLocal>false</CopyLocal>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\libs\SonaBridge\src\SonaBridge\SonaBridge.csproj" />
