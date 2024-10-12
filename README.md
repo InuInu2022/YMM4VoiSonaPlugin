@@ -37,6 +37,7 @@ YMM4のボイスとして **「VoiSona Talk」(ボイソナトーク)** を使�
 - ボイスライブラリの切替
   - 選択肢は「YMM4 VoiSona Talkプラグインの声質を再読み込み」で取得必要
 - プラグインの更新確認とダウンロード
+![ss](https://github.com/InuInu2022/YMM4VoiSonaPlugin/blob/main/docs/images/YMM4VoiSonaPlugin_download.png?raw=true)
 
 ## できないこと
 
