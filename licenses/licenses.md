@@ -1,7 +1,14 @@
  | Reference                                           | Version                                         | License Type    | License                                                                          | 
  | --------------------------------------------------- | ----------------------------------------------- | --------------- | -------------------------------------------------------------------------------- | 
+ | BigHelp.Http                                        | 0.3.2                                           | MIT             | https://opensource.org/licenses/MIT                                              | 
+ | ByteSize                                            | 2.1.1                                           | MIT             | https://licenses.nuget.org/MIT                                                   | 
  | coverlet.collector                                  | 6.0.0                                           | MIT             | https://licenses.nuget.org/MIT                                                   | 
+ | Epoxy.Build                                         | 1.15.0                                          | Apache-2.0      | https://licenses.nuget.org/Apache-2.0                                            | 
+ | Epoxy.Core.Wpf                                      | 1.15.0                                          | Apache-2.0      | https://licenses.nuget.org/Apache-2.0                                            | 
+ | Epoxy.Wpf                                           | 1.15.0                                          | Apache-2.0      | https://licenses.nuget.org/Apache-2.0                                            | 
+ | GithubReleaseDownloader                             | 1.0.0                                           | MIT             | https://licenses.nuget.org/MIT                                                   | 
  | Jab                                                 | 0.10.2                                          |                 |                                                                                  | 
+ | Mayerch1.GithubUpdateCheck                          | 1.2.1                                           | MIT             | https://licenses.nuget.org/MIT                                                   | 
  | Microsoft.CodeCoverage                              | 17.8.0                                          | LICENSE_MIT.txt | https://www.nuget.org/packages/Microsoft.CodeCoverage/17.8.0/License             | 
  | Microsoft.CSharp                                    | 4.3.0                                           | MS-EULA         | http://go.microsoft.com/fwlink/?LinkId=329770                                    | 
  | Microsoft.NET.Test.Sdk                              | 17.8.0                                          | LICENSE_MIT.txt | https://www.nuget.org/packages/Microsoft.NET.Test.Sdk/17.8.0/License             | 
@@ -13,6 +20,7 @@
  | Microsoft.Win32.Primitives                          | 4.3.0                                           | MS-EULA         | http://go.microsoft.com/fwlink/?LinkId=329770                                    | 
  | NETStandard.Library                                 | 1.6.1                                           | MS-EULA         | http://go.microsoft.com/fwlink/?LinkId=329770                                    | 
  | Newtonsoft.Json                                     | 13.0.1                                          | MIT             | https://licenses.nuget.org/MIT                                                   | 
+ | Newtonsoft.Json                                     | 13.0.3                                          | MIT             | https://licenses.nuget.org/MIT                                                   | 
  | NuGet.Frameworks                                    | 6.5.0                                           | Apache-2.0      | https://licenses.nuget.org/Apache-2.0                                            | 
  | PolySharp                                           | 1.14.1+a7a92a9ddd050275c91c42b711d22cb41c3fbf3d | MIT             | https://licenses.nuget.org/MIT                                                   | 
  | runtime.native.System                               | 4.3.0                                           | MS-EULA         | http://go.microsoft.com/fwlink/?LinkId=329770                                    | 
@@ -66,6 +74,7 @@
  | System.Resources.ResourceManager                    | 4.3.0                                           | MS-EULA         | http://go.microsoft.com/fwlink/?LinkId=329770                                    | 
  | System.Runtime                                      | 4.3.0                                           | MS-EULA         | http://go.microsoft.com/fwlink/?LinkId=329770                                    | 
  | System.Runtime.CompilerServices.Unsafe              | 4.5.3                                           | MIT             | https://github.com/dotnet/corefx/blob/master/LICENSE.TXT                         | 
+ | System.Runtime.CompilerServices.Unsafe              | 4.5.0                                           | MIT             | https://github.com/dotnet/corefx/blob/master/LICENSE.TXT                         | 
  | System.Runtime.Extensions                           | 4.3.0                                           | MS-EULA         | http://go.microsoft.com/fwlink/?LinkId=329770                                    | 
  | System.Runtime.Handles                              | 4.3.0                                           | MS-EULA         | http://go.microsoft.com/fwlink/?LinkId=329770                                    | 
  | System.Runtime.InteropServices                      | 4.3.0                                           | MS-EULA         | http://go.microsoft.com/fwlink/?LinkId=329770                                    | 
@@ -87,6 +96,7 @@
  | System.Threading                                    | 4.3.0                                           | MS-EULA         | http://go.microsoft.com/fwlink/?LinkId=329770                                    | 
  | System.Threading.Tasks                              | 4.3.0                                           | MS-EULA         | http://go.microsoft.com/fwlink/?LinkId=329770                                    | 
  | System.Threading.Tasks.Extensions                   | 4.3.0                                           | MS-EULA         | http://go.microsoft.com/fwlink/?LinkId=329770                                    | 
+ | System.Threading.Tasks.Extensions                   | 4.5.0                                           | MIT             | https://github.com/dotnet/corefx/blob/master/LICENSE.TXT                         | 
  | System.Threading.Timer                              | 4.3.0                                           | MS-EULA         | http://go.microsoft.com/fwlink/?LinkId=329770                                    | 
  | System.Xml.ReaderWriter                             | 4.3.0                                           | MS-EULA         | http://go.microsoft.com/fwlink/?LinkId=329770                                    | 
  | System.Xml.XDocument                                | 4.3.0                                           | MS-EULA         | http://go.microsoft.com/fwlink/?LinkId=329770                                    | 
