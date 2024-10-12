@@ -36,6 +36,7 @@ YMM4のボイスとして **「VoiSona Talk」(ボイソナトーク)** を使�
 - セリフをYMM4上から合成する
 - ボイスライブラリの切替
   - 選択肢は「YMM4 VoiSona Talkプラグインの声質を再読み込み」で取得必要
+- プラグインの更新確認とダウンロード
 
 ## できないこと
 
@@ -57,7 +58,6 @@ YMM4のボイスとして **「VoiSona Talk」(ボイソナトーク)** を使�
 ### 対応未定
 
 - アクセント、STY、VOL、PIT、ALP、HUS
-- 設定UI
 - VoiSona（Song）
 
 ## License
@@ -65,3 +65,4 @@ YMM4のボイスとして **「VoiSona Talk」(ボイソナトーク)** を使�
 - [/licenses](./licenses/)
   - SonaBridge - MIT
   - FlaUI - MIT
+  - Epoxy - Apache-2.0 license
