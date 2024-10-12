@@ -10,7 +10,7 @@ namespace YMM4VoiSonaPlugin.ViewModel;
 [ViewModel]
 public class TalkSettingViewModel
 {
-	public string? PluginVersion { get; } = "x.x.x";
+	public string? PluginVersion { get; }
 	public string UpdateMessage { get; set; } = "Update checkボタンを押してください";
 
 	public bool HasUpdate { get; set; }
@@ -20,49 +20,42 @@ public class TalkSettingViewModel
 	public Command Download { get; set; }
 	public Command OpenGithub { get; set; }
 
+	private readonly UpdateChecker checker;
+
 	public TalkSettingViewModel()
 	{
-		PluginVersion = //AssemblyUtil.GetVersionString(typeof(VoiSonaTalkPlugin));
+		PluginVersion = AssemblyUtil.GetVersionString(typeof(VoiSonaTalkPlugin));
 
-		typeof(TalkSettingViewModel).Assembly
-			.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute))
-			.Cast<AssemblyInformationalVersionAttribute>()
-			.FirstOrDefault()?
-			.InformationalVersion ?? "unknown";
-
-		var executingAssembly = Assembly
-			.GetExecutingAssembly()
-			.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute))
-			.Cast<AssemblyInformationalVersionAttribute>()
-			.FirstOrDefault()?
-			.InformationalVersion;
-        Console.WriteLine($"exe ver: {executingAssembly}");
+		checker = UpdateChecker
+			.Build("InuInu2022", "YMM4VoiSonaPlugin");
 
 		UpdateCheck = Command.Factory.Create(async () =>
 		{
-			var checker = UpdateChecker
-				.Build("InuInu2022", "YMM4VoiSonaPlugin");
 			HasUpdate = await checker
 				.IsAvailableAsync(typeof(TalkSettingViewModel))
 				.ConfigureAwait(true);
-			UpdateMessage = GetUpdateMessage();
+			UpdateMessage = await GetUpdateMessageAsync().ConfigureAwait(true);
 		});
 
 		Download = Command.Factory.Create(async () =>
 		{
-			var checker = UpdateChecker
-				.Build("InuInu2022", "YMM4VoiSonaPlugin");
-			var result = await checker.GetDownloadUrlAsync(
-				"YMM4VoiSonaPlugin.ymme",
-				"https://github.com/InuInu2022/YMM4VoiSonaPlugin/releases");
-			await OpenUrlAsync(result)
-				.ConfigureAwait(true);
+			try{
+				var result = await checker.GetDownloadUrlAsync(
+					"YMM4VoiSonaPlugin.ymme",
+					"https://github.com/InuInu2022/YMM4VoiSonaPlugin/releases")
+					.ConfigureAwait(false);
+				await OpenUrlAsync(result)
+					.ConfigureAwait(false);
+			}catch(Exception e)
+			{
+				await Console.Error.WriteLineAsync(e.Message).ConfigureAwait(false);
+			}
 		});
 
 
 		OpenGithub = Command.Factory.Create(async () =>
 			await OpenUrlAsync("https://github.com/InuInu2022/YMM4VoiSonaPlugin")
-				.ConfigureAwait(true)
+				.ConfigureAwait(false)
 		);
 	}
 
@@ -74,10 +67,12 @@ public class TalkSettingViewModel
 				FileName = openUrl,
 				UseShellExecute = true,
 			}) ?? new()
-		);
+		).ConfigureAwait(false);
 	}
 
-	string GetUpdateMessage(){
-		return HasUpdate ? "プラグインの更新があります" : "プラグインは最新です";
+	async ValueTask<string> GetUpdateMessageAsync(){
+		return HasUpdate
+			? $"プラグインの更新があります {await checker.GetRepositoryVersionAsync().ConfigureAwait(false)}"
+			: "プラグインは最新です";
 	}
 }
