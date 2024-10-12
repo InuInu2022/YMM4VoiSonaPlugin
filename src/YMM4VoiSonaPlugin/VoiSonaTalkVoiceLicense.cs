@@ -29,6 +29,6 @@ public record VoiSonaTalkVoiceLicense : IVoiceLicense
 
 	public ValueTask<bool> ValidateLicenseAsync()
 	{
-		throw new NotSupportedException();
+		return new ValueTask<bool>(true);
 	}
 }
