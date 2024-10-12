@@ -34,6 +34,7 @@ public class TalkSettingViewModel
 			HasUpdate = await checker
 				.IsAvailableAsync(typeof(TalkSettingViewModel))
 				.ConfigureAwait(true);
+			IsDownloadable = HasUpdate;
 			UpdateMessage = await GetUpdateMessageAsync().ConfigureAwait(true);
 		});
 
