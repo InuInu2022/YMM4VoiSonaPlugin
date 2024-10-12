@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <UseWPF>true</UseWPF>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-
   <ItemGroup>
     <!-- README -->
     <Content Include="../../README.md">
@@ -36,7 +36,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\libs\SonaBridge\src\SonaBridge\SonaBridge.csproj" />
     <ProjectReference Include="..\..\libs\YmmeUtil\src\YmmeUtil.Common\YmmeUtil.Common.csproj" />
-    <ProjectReference Include="..\YMM4VoiSonaPlugin.Settings\YMM4VoiSonaPlugin.Settings.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Epoxy.Wpf" Version="1.15.0" />
   </ItemGroup>
   <Target Name="RemovePublishDirBeforeBuild" BeforeTargets="BeforeBuild">
     <RemoveDir Directories="$(OutputPath)/publish/" />
@@ -45,7 +47,6 @@
   </Target>
   <Target Name="MakeZipPackage" AfterTargets="Publish">
     <MakeDir Directories="$(OutputPath)/../../../../../publish/" />
-
     <ItemGroup>
       <FilesToDelete Include="$(OutputPath)\publish\Vortice.*.dll" />
       <FilesToDelete Include="$(OutputPath)\publish\NCalc.*.dll" />
@@ -59,11 +60,8 @@
       <FilesToDelete Include="$(OutputPath)\publish\System.*.dll" />
       <FilesToDelete Include="$(OutputPath)\publish\ICSharpCode.AvalonEdit.dll" />
       <FilesToDelete Include="$(OutputPath)\publish\runtimes\win\lib\**\System.Management.dll" />
-
       <FilesToDelete Include="$(OutputPath)\publish\YukkuriMovieMaker.*.dll" />
       <FilesToDelete Include="$(OutputPath)\publish\YukkuriMovieMaker.*.pdb" />
-
-
     </ItemGroup>
     <Delete Files="$(OutputPath)/$(AssemblyName).pdb" />
     <Delete Files="$(OutputPath)/*.pdb" />
@@ -81,14 +79,10 @@
     <Delete Files="$(OutputPath)/publish/YukkuriMovieMaker.Controls.dll" />
     <Delete Files="$(OutputPath)/publish/YukkuriMovieMaker.*.dll" />
     <Delete Files="@(FilesToDelete)">
-       <Output TaskParameter="DeletedFiles" ItemName="FilesDeleted" />
-     </Delete>
-
-
-
+      <Output TaskParameter="DeletedFiles" ItemName="FilesDeleted" />
+    </Delete>
     <ZipDirectory SourceDirectory="$(OutputPath)/publish/" DestinationFile="$(OutputPath)/../../../../../publish/$(AssemblyName).ymme" Overwrite="true" />
     <Message Text="Actions After Publish" Importance="high" />
-
     <Copy SourceFiles="$(OutputPath)/../../../../../publish/$(AssemblyName).ymme" DestinationFolder="$(YMM4_PATH)\user\plugin\" />
     <Unzip SourceFiles="$(OutputPath)/../../../../../publish/$(AssemblyName).ymme" DestinationFolder="$(YMM4_PATH)\user\plugin\$(AssemblyName)\" />
   </Target>

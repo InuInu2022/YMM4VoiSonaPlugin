@@ -1,6 +1,7 @@
 using YukkuriMovieMaker.Plugin;
 using SonaBridge;
 using SonaBridge.Core.Common;
+using YMM4VoiSonaPlugin.ViewModel;
 
 namespace YMM4VoiSonaPlugin;
 
@@ -12,10 +13,19 @@ public partial class VoiSonaTalkSettings : SettingsBase<VoiSonaTalkSettings>
 {
 	public override SettingsCategory Category
 		=> SettingsCategory.Voice;
-	public override string Name => "VoiSona Talk ボイス設定";
+	public override string Name => "YMM4 VoiSona Talk";
 	public override bool HasSettingView => true;
 	public override object? SettingView
-		=> new VoiSonaTalkSettings();
+	{
+		get
+		{
+			var view = new YMM4VoiSonaPlugin.View.TalkSettingsView
+			{
+				DataContext = new TalkSettingViewModel()
+			};
+			return view;
+		}
+	}
 
 	public bool IsCached
 	{
