@@ -4,7 +4,7 @@ using YukkuriMovieMaker.Plugin;
 using YukkuriMovieMaker.Plugin.Voice;
 namespace YMM4VoiSonaPlugin;
 
-[PluginDetails(AuthorName = "InuInu", ContentId = "")]
+[PluginDetails(AuthorName = "InuInu", ContentId = "nc375085")]
 public sealed class VoiSonaTalkPlugin : IVoicePlugin
 {
 	public IEnumerable<IVoiceSpeaker> Voices
@@ -22,7 +22,7 @@ public sealed class VoiSonaTalkPlugin : IVoicePlugin
 		//制作者
 		AuthorName = "InuInu",
 		//作品ID
-		ContentId = "",
+		ContentId = "nc375085",
 	};
 
 	public VoiSonaTalkPlugin()
