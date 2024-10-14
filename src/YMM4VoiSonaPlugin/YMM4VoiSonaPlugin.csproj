@@ -1,16 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <UseWPF>true</UseWPF>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <NoWarn>$(NoWarn);MSB3277</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <!--
-    <DebugType>pdbonly</DebugType>
-    <GeneratePdb>true</GeneratePdb>
-    <EmbedAllSources>true</EmbedAllSources>
-    <SourceLink>true</SourceLink>
-    -->
   </PropertyGroup>
   <ItemGroup>
     <!-- README -->
@@ -62,20 +54,17 @@
     </PackageReference>
   </ItemGroup>
   <Target Name="RemovePublishDirBeforeBuild" BeforeTargets="BeforeBuild">
-
     <RemoveDir Directories="$(YMM4_PATH)\user\plugin\$(AssemblyName)\" />
     <Message Text="RemovePublishDirBeforeBuild" Importance="high" />
   </Target>
   <Target Name="CopyDebugDlls" BeforeTargets="AfterBuild" Condition="'$(Configuration)' == 'Debug'">
     <ItemGroup>
-      <CommonPaths Include="$(OutputPath)../../Release/$(TargetFramework)/publish"/>
-
-      <MissingDlls Include="$(CommonPaths)/*.dll" Exclude="$(CommonPaths)/$(AssemblyName).dll"/>
-      <MissingPdbs Include="$(CommonPaths)/*.pdb" Exclude="$(CommonPaths)/$(AssemblyName).pdb"/>
+      <CommonPaths Include="$(OutputPath)../../Release/$(TargetFramework)/publish" />
+      <MissingDlls Include="$(CommonPaths)/*.dll" Exclude="$(CommonPaths)/$(AssemblyName).dll" />
+      <MissingPdbs Include="$(CommonPaths)/*.pdb" Exclude="$(CommonPaths)/$(AssemblyName).pdb" />
     </ItemGroup>
-    <Copy SourceFiles="@(MissingDlls)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true"/>
-    <Copy SourceFiles="@(MissingPdbs)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true"/>
-
+    <Copy SourceFiles="@(MissingDlls)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(MissingPdbs)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
     <ItemGroup>
       <SourceFiles Include="$(OutputPath)**/*.*" />
     </ItemGroup>
