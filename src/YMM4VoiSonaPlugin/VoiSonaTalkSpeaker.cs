@@ -13,18 +13,11 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 	public string API => "YMM4VoiSonaTalk";
 	public string ID { get; }
 	public bool IsVoiceDataCachingRequired => true;
-	//TODO: support english voice
 	public SupportedTextFormat Format => SupportedTextFormat.Text;
-	public IVoiceLicense? License
-		=> new VoiSonaTalkVoiceLicense(
-			//TODO: add term url by voice
-		);
+	public IVoiceLicense? License { get; }
 	//TODO: cast data json
 	public IVoiceResource? Resource => null;
-
-	//TODO: ボイス毎の制作者指定
 	public string? SpeakerAuthor { get; }
-	//TODO: ボイス毎のニコニコID指定（あれば）
 	public string? SpeakerContentId { get; }
 	public string? EngineAuthor { get; } = "Techno-Speech, Inc.";
 	public string? EngineContentId { get; }
@@ -36,6 +29,12 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 	{
 		SpeakerName = $"{voiceName}";
 		ID = $"YMM4VoiSona{voiceName}";
+		var castData = VoiSonaCastManager.GetCastData(voiceName);
+		SpeakerAuthor = castData.Author;
+		SpeakerContentId = castData.ContentId;
+		License = new VoiSonaTalkVoiceLicense(
+			castData.TermUrl
+		);
 
 		var provider = new TalkServiceProvider();
 		_service = provider.GetService<ITalkAutoService>();

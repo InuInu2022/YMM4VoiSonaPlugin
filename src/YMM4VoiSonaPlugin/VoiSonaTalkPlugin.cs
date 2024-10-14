@@ -15,7 +15,7 @@ public sealed class VoiSonaTalkPlugin : IVoicePlugin
 	public bool CanUpdateVoices { get; } = true;
 	public bool IsVoicesCached => VoiSonaTalkSettings.Default.IsCached;
 	public string Name
-		=> $"YMM4 VoiSona Talk プラグイン";
+		=> "YMM4 VoiSona Talk プラグイン";
 
 	public VoiSonaTalkPlugin()
 	{
