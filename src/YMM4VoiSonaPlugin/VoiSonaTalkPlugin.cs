@@ -17,6 +17,14 @@ public sealed class VoiSonaTalkPlugin : IVoicePlugin
 	public string Name
 		=> "YMM4 VoiSona Talk プラグイン";
 
+	public PluginDetailsAttribute Details => new()
+	{
+		//制作者
+		AuthorName = "InuInu",
+		//作品ID
+		ContentId = "",
+	};
+
 	public VoiSonaTalkPlugin()
 	{
 		Console.WriteLine($"VoiSonaTalkPlugin: {AssemblyUtil.GetVersionString(typeof(VoiSonaTalkPlugin))}");
