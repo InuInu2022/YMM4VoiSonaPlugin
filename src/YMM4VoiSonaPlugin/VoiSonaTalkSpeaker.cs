@@ -23,7 +23,8 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 	public string? EngineContentId { get; }
 
 	static readonly SemaphoreSlim Semaphore = new(1);
-	readonly ITalkAutoService _service;
+	static readonly ITalkAutoService _service = new TalkServiceProvider()
+		.GetService<ITalkAutoService>();
 
 	public VoiSonaTalkSpeaker(string voiceName)
 	{
@@ -36,8 +37,8 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 			castData.TermUrl
 		);
 
-		var provider = new TalkServiceProvider();
-		_service = provider.GetService<ITalkAutoService>();
+		//var provider = new TalkServiceProvider();
+		//_service = provider.GetService<ITalkAutoService>();
 	}
 
 	public async Task<string> ConvertKanjiToYomiAsync(string text, IVoiceParameter voiceParameter)
@@ -65,6 +66,22 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 				.ConfigureAwait(false);
 			sw.Stop();
 			Console.WriteLine($"set cast time: {sw.Elapsed.TotalSeconds}");
+			sw.Restart();
+			if(parameter is VoiSonaTalkParameter vstParam)
+			{
+				await _service.SetGlobalParamsAsync(
+					new Dictionary<string,double>(StringComparer.Ordinal)
+					{
+						{nameof(vstParam.Speed), vstParam.Speed},
+						{nameof(vstParam.Volume), vstParam.Volume},
+						{nameof(vstParam.Pitch), vstParam.Pitch},
+						{nameof(vstParam.Alpha), vstParam.Alpha},
+						{"Into.", vstParam.Intonation},
+						{"Hus.", vstParam.Husky},
+					}
+				).ConfigureAwait(false);
+			}
+			sw.Stop();
 			sw.Restart();
 			var result = await _service
 				.OutputWaveToFileAsync(text, filePath)
