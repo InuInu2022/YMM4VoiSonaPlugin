@@ -4,6 +4,14 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <NoWarn>$(NoWarn);MSB3277</NoWarn>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <!--
+    <DebugType>pdbonly</DebugType>
+    <GeneratePdb>true</GeneratePdb>
+    <EmbedAllSources>true</EmbedAllSources>
+    <SourceLink>true</SourceLink>
+    -->
+  </PropertyGroup>
   <ItemGroup>
     <!-- README -->
     <Content Include="../../README.md">
@@ -35,16 +43,48 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\libs\SonaBridge\src\SonaBridge\SonaBridge.csproj" />
-    <ProjectReference Include="..\..\libs\YmmeUtil\src\YmmeUtil.Common\YmmeUtil.Common.csproj" />
+    <ProjectReference Include="..\..\libs\SonaBridge\src\SonaBridge\SonaBridge.csproj">
+      <Private>true</Private>
+      <CopyLocal>true</CopyLocal>
+    </ProjectReference>
+    <ProjectReference Include="..\..\libs\YmmeUtil\src\YmmeUtil.Common\YmmeUtil.Common.csproj">
+      <Private>true</Private>
+      <CopyLocal>true</CopyLocal>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Epoxy.Wpf" Version="1.15.0" />
+    <PackageReference Include="Epoxy.Wpf" Version="1.15.0">
+      <Private>true</Private>
+    </PackageReference>
+    <PackageReference Include="FlaUI.UIA3" Version="4.0.0">
+      <Private>true</Private>
+      <CopyLocal>true</CopyLocal>
+    </PackageReference>
   </ItemGroup>
   <Target Name="RemovePublishDirBeforeBuild" BeforeTargets="BeforeBuild">
-    <RemoveDir Directories="$(OutputPath)/publish/" />
+
     <RemoveDir Directories="$(YMM4_PATH)\user\plugin\$(AssemblyName)\" />
     <Message Text="RemovePublishDirBeforeBuild" Importance="high" />
+  </Target>
+  <Target Name="CopyDebugDlls" BeforeTargets="AfterBuild" Condition="'$(Configuration)' == 'Debug'">
+    <ItemGroup>
+      <CommonPaths Include="$(OutputPath)../../Release/$(TargetFramework)/publish"/>
+
+      <MissingDlls Include="$(CommonPaths)/*.dll" Exclude="$(CommonPaths)/$(AssemblyName).dll"/>
+      <MissingPdbs Include="$(CommonPaths)/*.pdb" Exclude="$(CommonPaths)/$(AssemblyName).pdb"/>
+    </ItemGroup>
+    <Copy SourceFiles="@(MissingDlls)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true"/>
+    <Copy SourceFiles="@(MissingPdbs)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true"/>
+
+    <ItemGroup>
+      <SourceFiles Include="$(OutputPath)**/*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(SourceFiles)" DestinationFolder="$(YMM4_PATH)\user\plugin\$(AssemblyName)\" />
+    <Message Text="Dlls @(MissingDlls)" Importance="high" />
+    <Message Text="PDBs @(MissingPdbs)" Importance="high" />
+  </Target>
+  <Target Name="CleanBeforePublish" BeforeTargets="BeforePublish">
+    <RemoveDir Directories="$(OutputPath)/publish/" />
   </Target>
   <Target Name="MakeZipPackage" AfterTargets="Publish">
     <MakeDir Directories="$(OutputPath)/../../../../../publish/" />
