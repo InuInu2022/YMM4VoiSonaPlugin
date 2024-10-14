@@ -1,63 +1,70 @@
 <UserControl x:Class="YMM4VoiSonaPlugin.View.TalkSettingsView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:YMM4VoiSonaPlugin.View"
-             xmlns:viewmodels="clr-namespace:YMM4VoiSonaPlugin.ViewModel"
-             mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+       xmlns:local="clr-namespace:YMM4VoiSonaPlugin.View"
+       xmlns:viewmodels="clr-namespace:YMM4VoiSonaPlugin.ViewModel"
+       mc:Ignorable="d"
+       d:DesignHeight="450" d:DesignWidth="800">
+  <ScrollViewer
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch"
+    HorizontalScrollBarVisibility="Disabled"
+    VerticalScrollBarVisibility="Auto">
     <StackPanel>
-        <Expander Header="YMM4 VoiSonaTalk Plugin" IsExpanded="True">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+      <Expander Header="YMM4 VoiSonaTalk Plugin" IsExpanded="True">
+        <Grid Margin="10">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+          </Grid.ColumnDefinitions>
 
-                <Label
-                    Content="Plugin version"
-                    Grid.Row="0" Grid.Column="0"
-                    />
-                <TextBox x:Name="PluginVersion"
-                    Text="{Binding PluginVersion, Mode=OneWay}"
-                    IsReadOnly="True"
-                    Grid.Row="0" Grid.Column="1" />
+          <Label
+            Content="Plugin version"
+            Grid.Row="0" Grid.Column="0"
+            />
+          <TextBox x:Name="PluginVersion"
+            Text="{Binding PluginVersion, Mode=OneWay}"
+            IsReadOnly="True"
+            Grid.Row="0" Grid.Column="1" />
 
-                <Label Content="{Binding UpdateMessage}"
-                    IsEnabled="{Binding HasUpdate}"
-                    Grid.Row="1" Grid.Column="0" />
-                <Button x:Name="UpdateCheck" Content="Update check"
-                    Command="{Binding UpdateCheck}"
-                    Grid.Row="1" Grid.Column="1" />
+          <Label Content="{Binding UpdateMessage}"
+            IsEnabled="{Binding HasUpdate}"
+            Grid.Row="1" Grid.Column="0" />
+          <Button x:Name="UpdateCheck" Content="Update check"
+            Command="{Binding UpdateCheck}"
+            Grid.Row="1" Grid.Column="1" />
 
-                <Button x:Name="Download" Content="Download"
-                    Command="{Binding Download}"
-                    IsEnabled="{Binding IsDownloadable}"
-                    Grid.Row="2" Grid.ColumnSpan="2" />
-            </Grid>
-        </Expander>
-        <GroupBox Header="YMM4 VoiSona Talk Pluginについて" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10">
-            <StackPanel>
-                <TextBlock Margin="5" TextWrapping="Wrap">VoiSona Talkに対応した非公式プラグインです。</TextBlock>
-                <TextBlock Margin="5" TextWrapping="Wrap">このプラグインが原因のエラーはVoiSona TalkやYMM4本体の開発者ではなく、いぬいぬ（InuInu2022）にご連絡ください。</TextBlock>
-                <TextBlock Margin="5">Ⓒ InuInu 2024</TextBlock>
-                <Button x:Name="GoToGithub" Content="Open Github"
-                    Command="{Binding OpenGithub}"
-                    Grid.Row="3" Grid.ColumnSpan="2" />
-            </StackPanel>
-        </GroupBox>
-        <GroupBox Header="VoiSona Talkについて" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10">
-            <StackPanel>
-                <TextBlock Margin="5" TextWrapping="Wrap">VoiSona TalkはTechno-Speech, Incによって開発された最新のAI技術で人間の話し方をリアルに再現する音声創作ソフトウェアです。</TextBlock>
-                <TextBlock Margin="5" TextWrapping="Wrap">Copyright © 2022-2024 Techno-Speech, Inc. All Right Reserved.</TextBlock>
-            </StackPanel>
-        </GroupBox>
+          <Button x:Name="Download" Content="Download"
+            Command="{Binding Download}"
+            IsEnabled="{Binding IsDownloadable}"
+            Grid.Row="2" Grid.ColumnSpan="2" />
+        </Grid>
+      </Expander>
+      <GroupBox Header="YMM4 VoiSona Talk Pluginについて" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10">
+        <StackPanel>
+          <TextBlock Margin="5" TextWrapping="Wrap">VoiSona Talkに対応した非公式プラグインです。</TextBlock>
+          <TextBlock Margin="5" TextWrapping="Wrap">このプラグインが原因のエラーはVoiSona TalkやYMM4本体の開発者ではなく、いぬいぬ（InuInu2022）にご連絡ください。</TextBlock>
+          <TextBlock Margin="5">Ⓒ InuInu 2024</TextBlock>
+          <Button x:Name="GoToGithub" Content="Open Github"
+            Command="{Binding OpenGithub}"
+            Grid.Row="3" Grid.ColumnSpan="2" />
+        </StackPanel>
+      </GroupBox>
+      <GroupBox Header="VoiSona Talkについて" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10">
+        <StackPanel>
+          <TextBlock Margin="5" TextWrapping="Wrap">VoiSona TalkはTechno-Speech, Incによって開発された最新のAI技術で人間の話し方をリアルに再現する音声創作ソフトウェアです。</TextBlock>
+          <TextBlock Margin="5" TextWrapping="Wrap">Copyright © 2022-2024 Techno-Speech, Inc. All Right Reserved.</TextBlock>
+        </StackPanel>
+      </GroupBox>
     </StackPanel>
+  </ScrollViewer>
+
 </UserControl>
