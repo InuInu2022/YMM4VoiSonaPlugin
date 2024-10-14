@@ -1,5 +1,7 @@
 # YMM4VoiSonaPlugin
 
+![cover](https://github.com/InuInu2022/YMM4VoiSonaPlugin/blob/main/docs/images/ymm4voisonatalkpluginthum.png?raw=true)
+
 ## これはなに？
 
 YMM4のボイスとして **「VoiSona Talk」(ボイソナトーク)** を使えるようにしたプラグインです。
