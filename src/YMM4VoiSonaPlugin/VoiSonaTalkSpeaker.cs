@@ -44,8 +44,8 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 	public async Task<string> ConvertKanjiToYomiAsync(string text, IVoiceParameter voiceParameter)
 	{
 		//TODO: get yomi from vs talk
-		return await Task.Run(()=>text);
-		//return Task.FromException<string>(new NotSupportedException());
+		return await Task.FromResult(text)
+			.ConfigureAwait(false);
 	}
 
 	public async Task<IVoicePronounce?> CreateVoiceAsync(
@@ -61,7 +61,9 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 		{
 			Console.WriteLine($"from ymm4 path: {filePath}");
 			var sw = System.Diagnostics.Stopwatch.StartNew();
-			await _service.SetCastAsync(SpeakerName);
+			await _service
+				.SetCastAsync(SpeakerName)
+				.ConfigureAwait(false);
 			sw.Stop();
 			Console.WriteLine($"set cast time: {sw.Elapsed.TotalSeconds}");
 			sw.Restart();
@@ -69,6 +71,17 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 				.OutputWaveToFileAsync(text, filePath)
 				.ConfigureAwait(false);
 			Console.WriteLine($"output time: {sw.Elapsed.TotalSeconds}");
+			if(!result){
+				await Console.Error
+					.WriteLineAsync($"ERROR! {nameof(CreateVoiceAsync)} : {text}")
+					.ConfigureAwait(false);
+			}
+		}
+		catch(Exception ex)
+		{
+			await Console.Error
+				.WriteLineAsync($"ERROR! {ex.Message}")
+				.ConfigureAwait(false);
 		}
 		finally
 		{
