@@ -173,6 +173,14 @@ csharp_preserve_single_line_blocks = true
 csharp_preserve_single_line_statements = true
 
 #### Naming styles ####
+
+# S1075: URIs should not be hardcoded
+dotnet_diagnostic.S1075.severity = silent
+
+
+# S1075: URIs should not be hardcoded
+dotnet_diagnostic.S1075.severity = silent
+
 [*.{cs,vb}]
 
 # Naming rules
