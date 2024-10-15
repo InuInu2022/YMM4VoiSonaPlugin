@@ -26,6 +26,8 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 	static readonly ITalkAutoService _service = new TalkServiceProvider()
 		.GetService<ITalkAutoService>();
 
+	readonly string _voiceName;
+
 	public VoiSonaTalkSpeaker(string voiceName)
 	{
 		SpeakerName = $"{voiceName}";
@@ -36,9 +38,7 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 		License = new VoiSonaTalkVoiceLicense(
 			castData.TermUrl
 		);
-
-		//var provider = new TalkServiceProvider();
-		//_service = provider.GetService<ITalkAutoService>();
+		_voiceName = voiceName;
 	}
 
 	public async Task<string> ConvertKanjiToYomiAsync(string text, IVoiceParameter voiceParameter)
