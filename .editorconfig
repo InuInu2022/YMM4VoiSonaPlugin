@@ -375,3 +375,4 @@ dotnet_naming_style.s_camelcase.capitalization = camel_case
 [*.Generated.cs]
 dotnet_analyzer_diagnostic.severity = none
 dotnet_diagnostic.CS1591.severity = none
+MA0051.maximum_lines_per_method = 100
