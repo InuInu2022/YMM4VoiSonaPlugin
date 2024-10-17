@@ -1,5 +1,4 @@
 using YmmeUtil.Common;
-
 using YukkuriMovieMaker.Plugin;
 using YukkuriMovieMaker.Plugin.Voice;
 namespace YMM4VoiSonaPlugin;
@@ -30,6 +29,10 @@ public sealed class VoiSonaTalkPlugin : IVoicePlugin
 		Console.WriteLine($"VoiSonaTalkPlugin: {AssemblyUtil.GetVersionString(typeof(VoiSonaTalkPlugin))}");
 	}
 
-	public Task UpdateVoicesAsync()
-		=> VoiSonaTalkSettings.Default.UpdateSpeakersAsync();
+	public async Task UpdateVoicesAsync()
+	{
+		await VoiSonaTalkSettings.Default
+			.UpdateSpeakersAsync()
+			.ConfigureAwait(false);
+	}
 }

@@ -2,6 +2,8 @@ using YukkuriMovieMaker.Plugin;
 using SonaBridge;
 using SonaBridge.Core.Common;
 using YMM4VoiSonaPlugin.ViewModel;
+using YukkuriMovieMaker.Plugin.Voice;
+using System.Collections.ObjectModel;
 
 namespace YMM4VoiSonaPlugin;
 
@@ -37,10 +39,17 @@ public partial class VoiSonaTalkSettings : SettingsBase<VoiSonaTalkSettings>
 		get { return _speakers; }
 		set { Set(ref _speakers, value); }
 	}
+	[System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "MA0016")]
+	public Dictionary<string, Dictionary<string, double>> SpeakersStyles
+	{
+		get { return _speakersStyles; }
+		set { Set(ref _speakersStyles, value); }
+	}
 
 	ITalkAutoService? _service;
 	bool _isCached;
 	string[] _speakers = [];
+	Dictionary<string, Dictionary<string, double>> _speakersStyles = new(StringComparer.Ordinal);
 
 	public override void Initialize()
 	{
@@ -54,10 +63,24 @@ public partial class VoiSonaTalkSettings : SettingsBase<VoiSonaTalkSettings>
 	public async Task UpdateSpeakersAsync()
 	{
 		if (_service is null) return;
-		IsCached = true;
 
 		Speakers = await _service
 			.GetAvailableCastsAsync()
 			.ConfigureAwait(false);
+
+		var dic = new Dictionary<string, Dictionary<string, double>>(StringComparer.Ordinal);
+		foreach (var item in Speakers)
+		{
+			if (item is null) continue;
+			await _service.SetCastAsync(item)
+				.ConfigureAwait(false);
+			var styles = await _service
+				.GetStylesAsync(item)
+				.ConfigureAwait(false);
+			dic.Add(item, styles.ToDictionary());
+		}
+		SpeakersStyles = dic;
+
+		IsCached = true;
 	}
 }

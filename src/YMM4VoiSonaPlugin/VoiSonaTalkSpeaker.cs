@@ -1,6 +1,12 @@
 
+using System.Collections.Immutable;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+
 using SonaBridge;
 using SonaBridge.Core.Common;
+
+using YMM4VoiSonaPlugin.ViewModel;
 
 using YukkuriMovieMaker.Plugin.Voice;
 
@@ -27,6 +33,8 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 		.GetService<ITalkAutoService>();
 
 	readonly string _voiceName;
+	ReadOnlyDictionary<string, double> _styles;
+	bool isInitialized;
 
 	public VoiSonaTalkSpeaker(string voiceName)
 	{
@@ -39,6 +47,15 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 			castData.TermUrl
 		);
 		_voiceName = voiceName;
+		_styles = new(new Dictionary<string, double>(StringComparer.Ordinal));
+	}
+
+	public async ValueTask InitAsync()
+	{
+		if (isInitialized) return;
+		_styles = await _service.GetStylesAsync(_voiceName)
+			.ConfigureAwait(false);
+		isInitialized = true;
 	}
 
 	public async Task<string> ConvertKanjiToYomiAsync(string text, IVoiceParameter voiceParameter)
@@ -80,6 +97,15 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 						{"Hus.", vstParam.Husky},
 					}
 				).ConfigureAwait(false);
+
+				await _service.SetStylesAsync(
+					SpeakerName,
+					vstParam.ItemsCollection
+						.ToDictionary(
+							x => x.DisplayName,
+							x => x.Value,
+							StringComparer.Ordinal)
+				).ConfigureAwait(false);
 			}
 			sw.Stop();
 			sw.Restart();
@@ -98,6 +124,7 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 			await Console.Error
 				.WriteLineAsync($"ERROR! {ex.Message}")
 				.ConfigureAwait(false);
+			throw;
 		}
 		finally
 		{
@@ -109,7 +136,20 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 
 	public IVoiceParameter CreateVoiceParameter()
 	{
-		return new VoiSonaTalkParameter();
+		if(!VoiSonaTalkSettings.Default.SpeakersStyles.TryGetValue(_voiceName, out var saved)){
+			return new VoiSonaTalkParameter();
+		}
+		_styles = saved.AsReadOnly();
+		return new VoiSonaTalkParameter
+		{
+			ItemsCollection = _styles
+				.Select(v => new VoiSonaTalkStyleParameter(){
+					DisplayName=v.Key,
+					Value=v.Value,
+					Description=$"Style: {v.Key}",
+				})
+				.ToImmutableList(),
+		};
 	}
 
 	public bool IsMatch(string api, string id)
@@ -120,8 +160,12 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 
 	public IVoiceParameter MigrateParameter(IVoiceParameter currentParameter)
 	{
-		return currentParameter is not VoiSonaTalkParameter
-			? CreateVoiceParameter()
-			: currentParameter;
+		if(currentParameter is not VoiSonaTalkParameter vsParam){
+			return CreateVoiceParameter();
+		}
+
+		//声質切替で固有Styleが切り替わらないので強制再読み込みを掛ける
+		var isSame = string.Equals(vsParam.Voice, _voiceName, StringComparison.Ordinal);
+		return isSame ? currentParameter : CreateVoiceParameter();
 	}
 }
