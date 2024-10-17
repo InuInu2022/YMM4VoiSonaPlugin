@@ -35,7 +35,7 @@ public partial class VoiSonaTalkParameter : VoiceParameterBase
 		set => Set(ref _speed, value);
 	}
 
-	[Display(Name = nameof(Volume), Description = "話速を調整")]
+	[Display(Name = nameof(Volume), Description = "ボリュームを調整")]
 	[TextBoxSlider("F2", "", -8, 8, Delay = -1)]
 	[Range(-8, 8)]
 	[DefaultValue(0.0)]
@@ -45,7 +45,7 @@ public partial class VoiSonaTalkParameter : VoiceParameterBase
 		set => Set(ref _volume, value);
 	}
 
-	[Display(Name = nameof(Pitch), Description = "話速を調整")]
+	[Display(Name = nameof(Pitch), Description = "ピッチの高さを調整")]
 	[TextBoxSlider("F2", "", -600, 600, Delay = -1)]
 	[Range(-600, 600)]
 	[DefaultValue(0.0)]
@@ -55,7 +55,7 @@ public partial class VoiSonaTalkParameter : VoiceParameterBase
 		set => Set(ref _pitch, value);
 	}
 
-	[Display(Name = nameof(Alpha), Description = "話速を調整")]
+	[Display(Name = nameof(Alpha), Description = "声質の詳細を調整")]
 	[TextBoxSlider("F2", "", -1, 1, Delay = -1)]
 	[Range(-1, 1)]
 	[DefaultValue(0.0)]
@@ -65,7 +65,7 @@ public partial class VoiSonaTalkParameter : VoiceParameterBase
 		set => Set(ref _alpha, value);
 	}
 
-	[Display(Name = "Into.", Description = "話速を調整")]
+	[Display(Name = "Into.", Description = "抑揚を調整")]
 	[TextBoxSlider("F2", "", 0.0, 2, Delay = -1)]
 	[Range(0, 2)]
 	[DefaultValue(1.0)]
@@ -75,7 +75,7 @@ public partial class VoiSonaTalkParameter : VoiceParameterBase
 		set => Set(ref _intonation, value);
 	}
 
-	[Display(Name = "Hus.", Description = "話速を調整")]
+	[Display(Name = "Hus.", Description = "声質の擦れ具合を調整")]
 	[TextBoxSlider("F2", "", -20, 20, Delay = -1)]
 	[Range(-20, 20)]
 	[DefaultValue(0.0)]
