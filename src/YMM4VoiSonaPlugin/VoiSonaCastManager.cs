@@ -14,6 +14,7 @@ public static class VoiSonaCastManager
 		{"Tsurumaki Maki English", new CastData("https://voisona.com/static/pdf/ja/tsurumaki-maki_guidelines.pdf","AHS", "") },
 		{"Koharu Rikka", new CastData("https://voisona.com/static/pdf/ja/koharu-rikka_guidelines.pdf","TOKYO6 ENTERTAINMENT", "nc309924") },
 		{"Natsuki Karin", new CastData("https://voisona.com/static/pdf/ja/natsuki-karin_guidelines.pdf","TOKYO6 ENTERTAINMENT", "nc309924") },
+		{"Hanakuma Chifuyu", new CastData("https://voisona.com/static/pdf/ja/hanakuma-chifuyu_guidelines.pdf","TOKYO6 ENTERTAINMENT", "nc309924") },
 		{"Tamaki", new CastData("https://voisona.com/static/pdf/ja/tamaki_guidelines.pdf","のりプロ", "") },
 	};
 	#pragma warning restore S1075 // URIs should not be hardcoded
