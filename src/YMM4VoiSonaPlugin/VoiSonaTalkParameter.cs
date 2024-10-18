@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 
 using YukkuriMovieMaker.Controls;
 using YukkuriMovieMaker.Plugin.Voice;
@@ -91,11 +92,21 @@ public partial class VoiSonaTalkParameter : VoiceParameterBase
 		get => _styles;
 		set
 		{
+			GetCaller(value);
 			UnsubscribeFromItems(_styles);
 			Set(ref _styles, value);
 			SubscribeToItems(_styles);
-			OnPropertyChanged(nameof(ItemsCollection));
 		}
+	}
+
+	[Conditional("DEBUG")]
+	void GetCaller(ImmutableList<VoiSonaTalkStyleParameter> value)
+	{
+		var dump = value.Select(v => $"{v.DisplayName}:{v.Value}");
+		var stackTrace = new StackTrace();
+        var callerMethod = stackTrace.GetFrame(3)?.GetMethod();
+		var caller = callerMethod?.Name ?? "unknown";
+		Debug.WriteLine($"from: {caller} {_voice} {string.Join(",",dump)}");
 	}
 
 	 // 個々のアイテムの PropertyChanged イベントに登録
@@ -120,11 +131,4 @@ public partial class VoiSonaTalkParameter : VoiceParameterBase
 	{
 		OnPropertyChanged($"{nameof(ItemsCollection)}.{e.PropertyName}");
 	}
-
-	public IVoiceParameter Clone()
-    {
-        var clone = YukkuriMovieMaker.Json.Json.GetClone(this);
-        clone!.ItemsCollection = ItemsCollection;
-        return clone;
-    }
 }

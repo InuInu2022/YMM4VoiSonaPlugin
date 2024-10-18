@@ -142,6 +142,7 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 		_styles = saved.AsReadOnly();
 		return new VoiSonaTalkParameter
 		{
+			Voice = _voiceName,
 			ItemsCollection = _styles
 				.Select(v => new VoiSonaTalkStyleParameter(){
 					DisplayName=v.Key,
