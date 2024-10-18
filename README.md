@@ -50,6 +50,7 @@ YMM4のボイスとして **「VoiSona Talk」(ボイソナトーク)** を使�
 ![ss](https://github.com/InuInu2022/YMM4VoiSonaPlugin/blob/main/docs/images/YMM4VoiSonaPlugin_download.png?raw=true)
 - セリフのグローバルパラメータ対応 (v0.2)
   - Speed, Volume, Pitch, Alpha, Into., Hus.
+- セリフのスタイル対応 (v0.3)
 
 ## できないこと
 
@@ -58,7 +59,6 @@ YMM4のボイスとして **「VoiSona Talk」(ボイソナトーク)** を使�
 - 高速なセリフ合成
   - 現在は 2~4 秒程度かかります
 - セリフのプリセット対応
-- セリフのスタイル対応
 - 日本語以外のUI言語対応（VoiSona Talk）
 - 別方式のセリフ合成（音声キャプチャ）
 
