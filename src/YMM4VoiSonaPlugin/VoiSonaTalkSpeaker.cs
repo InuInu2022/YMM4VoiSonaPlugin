@@ -34,7 +34,6 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 
 	readonly string _voiceName;
 	ReadOnlyDictionary<string, double> _styles;
-	bool isInitialized;
 
 	public VoiSonaTalkSpeaker(string voiceName)
 	{
@@ -48,14 +47,6 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 		);
 		_voiceName = voiceName;
 		_styles = new(new Dictionary<string, double>(StringComparer.Ordinal));
-	}
-
-	public async ValueTask InitAsync()
-	{
-		if (isInitialized) return;
-		_styles = await _service.GetStylesAsync(_voiceName)
-			.ConfigureAwait(false);
-		isInitialized = true;
 	}
 
 	public async Task<string> ConvertKanjiToYomiAsync(string text, IVoiceParameter voiceParameter)
