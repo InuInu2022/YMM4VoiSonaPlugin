@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Text.Json.Serialization;
 
 using YukkuriMovieMaker.Controls;
 using YukkuriMovieMaker.Plugin.Voice;
@@ -19,12 +20,26 @@ public partial class VoiSonaTalkParameter : VoiceParameterBase
 
 	ImmutableList<VoiSonaTalkStyleParameter> _styles = [];
 	string _voice = "";
+	int _preset;
+	IReadOnlyList<(string Name, object Value)> _presets = [];
 
 	public string Voice
 	{
 		get => _voice;
 		set => Set(ref _voice, value);
 	}
+
+	/*
+	[Display(Name = "プリセット", Description = "プリセットを選択")]
+	[CommonComboBox("Name", "Value", nameof(Presets))]
+	public int Preset {get => _preset; set => Set(ref _preset, value); }
+
+	[JsonIgnore]
+	public IReadOnlyList<(string Name, object Value)> Presets{
+		get => _presets;
+		set => Set(ref _presets, value);
+	}
+	*/
 
 	[Display(Name = nameof(Speed), Description = "話速を調整")]
 	[TextBoxSlider("F2", "", 0.2, 5, Delay = -1)]
@@ -92,21 +107,10 @@ public partial class VoiSonaTalkParameter : VoiceParameterBase
 		get => _styles;
 		set
 		{
-			GetCaller(value);
 			UnsubscribeFromItems(_styles);
 			Set(ref _styles, value);
 			SubscribeToItems(_styles);
 		}
-	}
-
-	[Conditional("DEBUG")]
-	void GetCaller(ImmutableList<VoiSonaTalkStyleParameter> value)
-	{
-		var dump = value.Select(v => $"{v.DisplayName}:{v.Value}");
-		var stackTrace = new StackTrace();
-        var callerMethod = stackTrace.GetFrame(3)?.GetMethod();
-		var caller = callerMethod?.Name ?? "unknown";
-		Debug.WriteLine($"from: {caller} {_voice} {string.Join(",",dump)}");
 	}
 
 	 // 個々のアイテムの PropertyChanged イベントに登録
