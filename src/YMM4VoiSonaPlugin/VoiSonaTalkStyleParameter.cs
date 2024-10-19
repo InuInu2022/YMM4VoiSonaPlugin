@@ -18,7 +18,7 @@ public partial class VoiSonaTalkStyleParameter : VoiceParameterBase
 	public string Description { get => _description; init => Set(ref _description, value); }
 
 	[VoiSonaStyleDisplay]
-	[TextBoxSlider("F2", "", 0, 1, Delay = -1)]
+	[TextBoxSlider("F2", "", -1, 2, Delay = -1)]
 	[Range(0, 1)]
 	[DefaultValue(0.0)]
 	public double Value { get => _value; set => Set(ref _value, value);}
