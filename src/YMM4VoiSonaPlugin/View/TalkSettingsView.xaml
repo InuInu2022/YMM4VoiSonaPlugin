@@ -35,17 +35,25 @@
             IsReadOnly="True"
             Grid.Row="0" Grid.Column="1" />
 
+          <Label Content="ボイスライブラリ切替高速化（※時間がかかります）"
+            ToolTip="VoiSona Talkは別トラックにボイスを割り当てていると速くボイス切替ができます。事前に利用しないトラックにすべてのボイスを割り当てます。"
+            Grid.Row="1" Grid.Column="0" />
+          <Button x:Name="PreloadVoice" Content="ボイスのプリロード"
+            Command="{Binding PreloadVoice}"
+            IsEnabled="{Binding IsPreloadButtonEnabled}"
+            Grid.Row="1" Grid.Column="1" />
+
           <Label Content="{Binding UpdateMessage}"
             IsEnabled="{Binding HasUpdate}"
-            Grid.Row="1" Grid.Column="0" />
+            Grid.Row="2" Grid.Column="0" />
           <Button x:Name="UpdateCheck" Content="Update check"
             Command="{Binding UpdateCheck}"
-            Grid.Row="1" Grid.Column="1" />
+            Grid.Row="2" Grid.Column="1" />
 
           <Button x:Name="Download" Content="Download"
             Command="{Binding Download}"
             IsEnabled="{Binding IsDownloadable}"
-            Grid.Row="2" Grid.ColumnSpan="2" />
+            Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" />
         </Grid>
       </Expander>
       <GroupBox Header="YMM4 VoiSona Talk Pluginについて" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10">
@@ -55,7 +63,7 @@
           <TextBlock Margin="5">Ⓒ InuInu 2024</TextBlock>
           <Button x:Name="GoToGithub" Content="Open Github"
             Command="{Binding OpenGithub}"
-            Grid.Row="3" Grid.ColumnSpan="2" />
+            />
         </StackPanel>
       </GroupBox>
       <GroupBox Header="VoiSona Talkについて" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10">
