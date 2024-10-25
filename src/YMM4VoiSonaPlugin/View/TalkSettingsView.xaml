@@ -48,6 +48,7 @@
             Grid.Row="2" Grid.Column="0" />
           <Button x:Name="UpdateCheck" Content="Update check"
             Command="{Binding UpdateCheck}"
+            IsEnabled="{Binding IsUpdateCheckEnabled}"
             Grid.Row="2" Grid.Column="1" />
 
           <Button x:Name="Download" Content="Download"

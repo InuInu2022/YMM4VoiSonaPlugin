@@ -22,6 +22,7 @@ public class TalkSettingViewModel
 	public bool IsPreloading { get;set;}
 	public bool IsPreloadButtonEnabled { get; set; } = true;
 	public bool HasUpdate { get; set; }
+	public bool IsUpdateCheckEnabled { get; set; } = true;
 	public bool IsDownloadable { get; set; }
 
 	public Command PreloadVoice { get; set; }
@@ -42,11 +43,17 @@ public class TalkSettingViewModel
 
 		UpdateCheck = Command.Factory.Create(async () =>
 		{
+			IsUpdateCheckEnabled = false;
+			TaskbarUtil.StartIndeterminate();
+
 			HasUpdate = await checker
 				.IsAvailableAsync(typeof(TalkSettingViewModel))
 				.ConfigureAwait(true);
 			IsDownloadable = HasUpdate;
 			UpdateMessage = await GetUpdateMessageAsync().ConfigureAwait(true);
+
+			IsUpdateCheckEnabled = true;
+			TaskbarUtil.FinishIndeterminate();
 		});
 
 		Download = Command.Factory.Create(async () =>
