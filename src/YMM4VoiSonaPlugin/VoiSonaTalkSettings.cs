@@ -4,6 +4,8 @@ using SonaBridge.Core.Common;
 using YMM4VoiSonaPlugin.ViewModel;
 using YukkuriMovieMaker.Plugin.Voice;
 using System.Collections.ObjectModel;
+using Epoxy;
+using YmmeUtil.Ymm4;
 
 namespace YMM4VoiSonaPlugin;
 
@@ -64,9 +66,23 @@ public partial class VoiSonaTalkSettings : SettingsBase<VoiSonaTalkSettings>
 	{
 		if (_service is null) return;
 
+		await UIThread.InvokeAsync(()=>{
+			TaskbarUtil.StartIndeterminate();
+			return ValueTask.CompletedTask;
+		}).ConfigureAwait(false);
+
 		Speakers = await _service
 			.GetAvailableCastsAsync()
 			.ConfigureAwait(false);
+
+		await UIThread.InvokeAsync(()=>{
+			TaskbarUtil.FinishIndeterminate();
+			TaskbarUtil.ShowNormal();
+			return ValueTask.CompletedTask;
+		}).ConfigureAwait(false);
+
+		double total = Speakers.Length;
+		var index = 1;
 
 		var dic = new Dictionary<string, Dictionary<string, double>>(StringComparer.Ordinal);
 		foreach (var item in Speakers)
@@ -78,9 +94,20 @@ public partial class VoiSonaTalkSettings : SettingsBase<VoiSonaTalkSettings>
 				.GetStylesAsync(item)
 				.ConfigureAwait(false);
 			dic.Add(item, styles.ToDictionary());
+
+			await UIThread.InvokeAsync(()=>{
+				TaskbarUtil.ShowProgress(index / total);
+				return ValueTask.CompletedTask;
+			}).ConfigureAwait(false);
+			index++;
 		}
 		SpeakersStyles = dic;
 
 		IsCached = true;
+
+		await UIThread.InvokeAsync(()=>{
+			TaskbarUtil.FinishIndeterminate();
+			return ValueTask.CompletedTask;
+		}).ConfigureAwait(false);
 	}
 }

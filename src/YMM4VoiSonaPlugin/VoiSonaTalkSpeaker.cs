@@ -3,10 +3,14 @@ using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
+using Epoxy;
+
 using SonaBridge;
 using SonaBridge.Core.Common;
 
 using YMM4VoiSonaPlugin.ViewModel;
+
+using YmmeUtil.Ymm4;
 
 using YukkuriMovieMaker.Plugin.Voice;
 
@@ -65,6 +69,11 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 	{
 		await Semaphore.WaitAsync().ConfigureAwait(false);
 
+		await UIThread.InvokeAsync(()=>{
+			TaskbarUtil.StartIndeterminate();
+			return ValueTask.CompletedTask;
+		}).ConfigureAwait(false);
+
 		try
 		{
 			Console.WriteLine($"from ymm4 path: {filePath}");
@@ -108,6 +117,10 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 				await Console.Error
 					.WriteLineAsync($"ERROR! {nameof(CreateVoiceAsync)} : {text}")
 					.ConfigureAwait(false);
+				await UIThread.InvokeAsync(()=>{
+					TaskbarUtil.ShowError();
+					return ValueTask.CompletedTask;
+				}).ConfigureAwait(false);
 			}
 		}
 		catch(Exception ex)
@@ -115,11 +128,19 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 			await Console.Error
 				.WriteLineAsync($"ERROR! {ex.Message}")
 				.ConfigureAwait(false);
-			throw;
+			await UIThread.InvokeAsync(()=>{
+				TaskbarUtil.ShowError();
+				return ValueTask.CompletedTask;
+			}).ConfigureAwait(false);
 		}
 		finally
 		{
 			Semaphore.Release();
+
+			await UIThread.InvokeAsync(()=>{
+				TaskbarUtil.FinishIndeterminate();
+				return ValueTask.CompletedTask;
+			}).ConfigureAwait(false);
 		}
 		//TODO: get pronounce from vs talk
 		return null;
