@@ -142,8 +142,7 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 				return ValueTask.CompletedTask;
 			}).ConfigureAwait(false);
 		}
-		//TODO: get pronounce from vs talk
-		return null;
+		return new VoiSonaTalkPronounce();
 	}
 
 	public IVoiceParameter CreateVoiceParameter()
