@@ -94,6 +94,7 @@ public class TalkSettingViewModel
 		IsPreloading = false;
 		IsPreloadButtonEnabled = true;
 		TaskbarUtil.FinishIndeterminate();
+		WindowUtil.FocusBack();
 	}
 
 	static async Task<Process> OpenUrlAsync(string openUrl)

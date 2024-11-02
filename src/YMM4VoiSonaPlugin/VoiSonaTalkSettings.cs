@@ -6,6 +6,7 @@ using YukkuriMovieMaker.Plugin.Voice;
 using System.Collections.ObjectModel;
 using Epoxy;
 using YmmeUtil.Ymm4;
+using System.Diagnostics.CodeAnalysis;
 
 namespace YMM4VoiSonaPlugin;
 
@@ -41,17 +42,25 @@ public partial class VoiSonaTalkSettings : SettingsBase<VoiSonaTalkSettings>
 		get { return _speakers; }
 		set { Set(ref _speakers, value); }
 	}
-	[System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "MA0016")]
+	[SuppressMessage("Design", "MA0016")]
 	public Dictionary<string, Dictionary<string, double>> SpeakersStyles
 	{
 		get { return _speakersStyles; }
 		set { Set(ref _speakersStyles, value); }
 	}
 
+	[SuppressMessage("Design", "MA0016")]
+	public Dictionary<string, IList<string>> SpeakersPresets
+	{
+		get { return _speakersPresets; }
+		set { Set(ref _speakersPresets, value); }
+	}
+
 	ITalkAutoService? _service;
 	bool _isCached;
 	string[] _speakers = [];
 	Dictionary<string, Dictionary<string, double>> _speakersStyles = new(StringComparer.Ordinal);
+	Dictionary<string, IList<string>> _speakersPresets = new(StringComparer.Ordinal);
 
 	public override void Initialize()
 	{
@@ -84,16 +93,25 @@ public partial class VoiSonaTalkSettings : SettingsBase<VoiSonaTalkSettings>
 		double total = Speakers.Length;
 		var index = 1;
 
-		var dic = new Dictionary<string, Dictionary<string, double>>(StringComparer.Ordinal);
+		var styleDic = new Dictionary<string, Dictionary<string, double>>(StringComparer.Ordinal);
+		var presetDic = new Dictionary<string, IList<string>>(StringComparer.Ordinal);
 		foreach (var item in Speakers)
 		{
 			if (item is null) continue;
 			await _service.SetCastAsync(item)
 				.ConfigureAwait(false);
+
+			//styles
 			var styles = await _service
 				.GetStylesAsync(item)
 				.ConfigureAwait(false);
-			dic.Add(item, styles.ToDictionary());
+			styleDic.Add(item, styles.ToDictionary());
+
+			//presets
+			var presets = await _service
+				.GetPresetsAsync(item)
+				.ConfigureAwait(false);
+			presetDic.Add(item, [..presets]);
 
 			await UIThread.InvokeAsync(()=>{
 				TaskbarUtil.ShowProgress(index / total);
@@ -101,7 +119,8 @@ public partial class VoiSonaTalkSettings : SettingsBase<VoiSonaTalkSettings>
 			}).ConfigureAwait(false);
 			index++;
 		}
-		SpeakersStyles = dic;
+		SpeakersStyles = styleDic;
+		SpeakersPresets = presetDic;
 
 		IsCached = true;
 
@@ -109,5 +128,7 @@ public partial class VoiSonaTalkSettings : SettingsBase<VoiSonaTalkSettings>
 			TaskbarUtil.FinishIndeterminate();
 			return ValueTask.CompletedTask;
 		}).ConfigureAwait(false);
+
+		WindowUtil.FocusBack();
 	}
 }

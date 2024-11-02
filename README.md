@@ -77,3 +77,4 @@ YMM4のボイスとして **「VoiSona Talk」(ボイソナトーク)** を使�
   - SonaBridge - MIT
   - FlaUI - MIT
   - Epoxy - Apache-2.0 license
+  - Material.Icons.WPF - MIT

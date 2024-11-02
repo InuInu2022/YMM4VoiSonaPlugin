@@ -1,11 +1,14 @@
 using System.Collections.Immutable;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using System.Text.Json.Serialization;
+
+using Newtonsoft.Json;
 
 using YukkuriMovieMaker.Controls;
 using YukkuriMovieMaker.Plugin.Voice;
+
+using YMM4VoiSonaPlugin.View;
+using System.Diagnostics;
 
 namespace YMM4VoiSonaPlugin;
 
@@ -20,8 +23,8 @@ public partial class VoiSonaTalkParameter : VoiceParameterBase
 
 	ImmutableList<VoiSonaTalkStyleParameter> _styles = [];
 	string _voice = "";
-	int _preset;
-	IReadOnlyList<(string Name, object Value)> _presets = [];
+
+	ImmutableList<string>? _preset;
 
 	public string Voice
 	{
@@ -29,17 +32,26 @@ public partial class VoiSonaTalkParameter : VoiceParameterBase
 		set => Set(ref _voice, value);
 	}
 
+	#region synthesis_options
 	/*
-	[Display(Name = "プリセット", Description = "プリセットを選択")]
-	[CommonComboBox("Name", "Value", nameof(Presets))]
-	public int Preset {get => _preset; set => Set(ref _preset, value); }
+	bool _isDoSynth;
 
-	[JsonIgnore]
-	public IReadOnlyList<(string Name, object Value)> Presets{
-		get => _presets;
-		set => Set(ref _presets, value);
+	[Display(GroupName = "合成オプション", Name = "パラメータ変更再合成", Description = "パラメータ変更時に再合成をするかどうか。")]
+	[ToggleSlider]
+	public bool IsDoSynth {
+		get => _isDoSynth;
+		set => Set(ref _isDoSynth, value);
 	}
 	*/
+
+	#endregion
+
+
+	[Display(Name = "プリセット", Description = "プリセットを選択")]
+	[VoiSonaTalkPresetDisplay]
+	public ImmutableList<string>? Preset {get => _preset; set => Set(ref _preset, value); }
+
+	public int PresetIndex { get; set; } = -1;
 
 	[Display(Name = nameof(Speed), Description = "話速を調整")]
 	[TextBoxSlider("F2", "", 0.2, 5, Delay = -1)]
@@ -102,13 +114,23 @@ public partial class VoiSonaTalkParameter : VoiceParameterBase
 	}
 
 	[Display(AutoGenerateField = true)]
+	[JsonProperty]
 	public ImmutableList<VoiSonaTalkStyleParameter> ItemsCollection
 	{
 		get => _styles;
 		set
 		{
 			UnsubscribeFromItems(_styles);
-			Set(ref _styles, value);
+			try
+			{
+				Set(ref _styles, value);
+			}
+			catch (Exception e)
+			{
+				Debug.WriteLine(e.Message);
+				Debug.WriteLine(e.StackTrace);
+			}
+
 			SubscribeToItems(_styles);
 		}
 	}

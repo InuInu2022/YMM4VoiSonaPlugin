@@ -1,0 +1,49 @@
+<UserControl x:Class="YMM4VoiSonaPlugin.View.TalkPresetsView"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+       xmlns:local="clr-namespace:YMM4VoiSonaPlugin.View"
+       xmlns:viewmodels="clr-namespace:YMM4VoiSonaPlugin.ViewModel"
+       xmlns:materialIcons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
+       mc:Ignorable="d"
+       d:DesignHeight="200" d:DesignWidth="300">
+  <!--
+  <UserControl.DataContext>
+    <viewmodels:TalkPresetsViewModel />
+  </UserControl.DataContext>
+  -->
+  <UserControl.Resources>
+    <!-- DrawingImageをリソースとして定義 -->
+    <DrawingImage x:Key="MyIcon">
+      <DrawingImage.Drawing>
+        <GeometryDrawing
+          Brush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+          Geometry="M2 12C2 16.97 6.03 21 11 21C13.39 21 15.68 20.06 17.4 18.4L15.9 16.9C14.63 18.25 12.86 19 11 19C4.76 19 1.64 11.46 6.05 7.05C10.46 2.64 18 5.77 18 12H15L19 16H19.1L23 12H20C20 7.03 15.97 3 11 3C6.03 3 2 7.03 2 12Z" />
+      </DrawingImage.Drawing>
+    </DrawingImage>
+  </UserControl.Resources>
+
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+
+    <ComboBox
+      x:Name="PresetCombo"
+      ItemsSource="{Binding Presets}"
+      SelectedIndex="{Binding PresetIndex}"
+      Grid.Row="0" Grid.Column="0"
+      />
+    <Button x:Name="ReloadPresets"
+      Command="{Binding ReloadPresets}"
+      Grid.Row="0" Grid.Column="1"
+      Width="26"
+      Height="26"
+    >
+      <Image Source="{StaticResource MyIcon}" />
+    </Button>
+  </Grid>
+
+</UserControl>

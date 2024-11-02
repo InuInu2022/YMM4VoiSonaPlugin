@@ -38,6 +38,7 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 
 	readonly string _voiceName;
 	ReadOnlyDictionary<string, double> _styles;
+	IReadOnlyList<string> _presets;
 
 	public VoiSonaTalkSpeaker(string voiceName)
 	{
@@ -51,6 +52,7 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 		);
 		_voiceName = voiceName;
 		_styles = new(new Dictionary<string, double>(StringComparer.Ordinal));
+		_presets = [];
 	}
 
 	public async Task<string> ConvertKanjiToYomiAsync(string text, IVoiceParameter voiceParameter)
@@ -130,6 +132,7 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 				.ConfigureAwait(false);
 			await UIThread.InvokeAsync(()=>{
 				TaskbarUtil.ShowError();
+				WindowUtil.FocusBack();
 				return ValueTask.CompletedTask;
 			}).ConfigureAwait(false);
 		}
@@ -139,6 +142,7 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 
 			await UIThread.InvokeAsync(()=>{
 				TaskbarUtil.FinishIndeterminate();
+				WindowUtil.FocusBack();
 				return ValueTask.CompletedTask;
 			}).ConfigureAwait(false);
 		}
@@ -147,10 +151,16 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 
 	public IVoiceParameter CreateVoiceParameter()
 	{
-		if(!VoiSonaTalkSettings.Default.SpeakersStyles.TryGetValue(_voiceName, out var saved)){
+		if(
+			!VoiSonaTalkSettings.Default.SpeakersStyles.TryGetValue(_voiceName, out var savedStyles)
+		){
 			return new VoiSonaTalkParameter();
 		}
-		_styles = saved.AsReadOnly();
+		var hasPresets = VoiSonaTalkSettings.Default.SpeakersPresets
+			.TryGetValue(_voiceName, out var savedPresets);
+		_styles = savedStyles.AsReadOnly();
+		if(hasPresets) _presets = savedPresets!.AsReadOnly();
+
 		return new VoiSonaTalkParameter
 		{
 			Voice = _voiceName,
@@ -161,6 +171,7 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 					Description=$"Style: {v.Key}",
 				})
 				.ToImmutableList(),
+			Preset = [.._presets],
 		};
 	}
 

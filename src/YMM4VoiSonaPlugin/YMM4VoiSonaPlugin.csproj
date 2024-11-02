@@ -56,6 +56,10 @@
       <Private>true</Private>
       <CopyLocal>true</CopyLocal>
     </PackageReference>
+    <PackageReference Include="Material.Icons.WPF" Version="2.1.10">
+      <Private>true</Private>
+      <CopyLocal>true</CopyLocal>
+    </PackageReference>
   </ItemGroup>
   <Target Name="RemovePublishDirBeforeBuild" BeforeTargets="BeforeBuild">
     <RemoveDir Directories="$(YMM4_PATH)\user\plugin\$(AssemblyName)\" />
