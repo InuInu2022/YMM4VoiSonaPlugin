@@ -58,6 +58,9 @@ public class TalkPresetsViewModel: IPropertyEditorControl, IDisposable
 				.ConfigureAwait(true);
 			TaskbarUtil.FinishIndeterminate();
 			Presets = [.. presets];
+			VoiSonaTalkSettings.Default
+				.SpeakersPresets[voice] = [..presets];
+			VoiSonaTalkSettings.Default.Save();
 			WindowUtil.FocusBack();
 			PresetIndex = -1;
 		});
@@ -92,6 +95,7 @@ public class TalkPresetsViewModel: IPropertyEditorControl, IDisposable
 					Value = s.Value,
 					Description = $"Style: {s.Key}",
 				});
+			vsParam.Preset = [.. Presets];
 			vsParam.PresetIndex = index;
 			vsParam.Alpha = globalParams["Alpha"];
 			vsParam.Husky = globalParams["Hus."];

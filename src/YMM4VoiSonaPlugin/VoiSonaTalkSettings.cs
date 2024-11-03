@@ -126,9 +126,8 @@ public partial class VoiSonaTalkSettings : SettingsBase<VoiSonaTalkSettings>
 
 		await UIThread.InvokeAsync(()=>{
 			TaskbarUtil.FinishIndeterminate();
+			WindowUtil.FocusBack();
 			return ValueTask.CompletedTask;
 		}).ConfigureAwait(false);
-
-		WindowUtil.FocusBack();
 	}
 }
