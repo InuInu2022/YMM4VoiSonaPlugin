@@ -41,6 +41,7 @@
       Grid.Row="0" Grid.Column="1"
       Width="26"
       Height="26"
+      ToolTip="プリセットの一時的な再読み込み"
     >
       <Image Source="{StaticResource MyIcon}" />
     </Button>
