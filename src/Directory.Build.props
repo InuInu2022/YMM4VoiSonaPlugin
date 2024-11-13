@@ -86,7 +86,7 @@
     </PackageReference>
     <PackageReference
        Include="Meziantou.Analyzer"
-       Version="2.0.177">
+       Version="2.0.179">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -108,7 +108,7 @@
     </PackageReference>
     <PackageReference
        Include="Microsoft.VisualStudio.Threading.Analyzers"
-       Version="17.11.20">
+       Version="17.12.19">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
