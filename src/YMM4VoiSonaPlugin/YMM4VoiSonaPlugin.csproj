@@ -3,6 +3,7 @@
     <UseWPF>true</UseWPF>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <NoWarn>$(NoWarn);MSB3277</NoWarn>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <!-- README -->
@@ -49,13 +50,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Epoxy.Wpf" Version="1.15.0">
-      <Private>true</Private>
-    </PackageReference>
-    <PackageReference Include="FlaUI.UIA3" Version="4.0.0">
-      <Private>true</Private>
-      <CopyLocal>true</CopyLocal>
-    </PackageReference>
+    <PackageReference Include="Epoxy.Wpf" Version="1.16.0" />
+    <PackageReference Include="FlaUI.UIA3" Version="4.0.0" />
   </ItemGroup>
   <Target Name="RemovePublishDirBeforeBuild" BeforeTargets="BeforeBuild">
     <RemoveDir Directories="$(YMM4_PATH)\user\plugin\$(AssemblyName)\" />
@@ -73,6 +69,7 @@
       <SourceFiles Include="$(OutputPath)**/*.*" />
     </ItemGroup>
     <Copy SourceFiles="@(SourceFiles)" DestinationFolder="$(YMM4_PATH)\user\plugin\$(AssemblyName)\" />
+
     <Message Text="Dlls @(MissingDlls)" Importance="high" />
     <Message Text="PDBs @(MissingPdbs)" Importance="high" />
   </Target>

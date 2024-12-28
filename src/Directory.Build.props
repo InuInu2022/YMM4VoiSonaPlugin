@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
-    <LangVersion>12.0</LangVersion>
-    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <LangVersion>13.0</LangVersion>
+    <TargetFramework>net9.0-windows10.0.19041.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
@@ -56,37 +56,37 @@
   <ItemGroup Condition="'$(Configuration)' == 'Debug'">
     <PackageReference
        Include="Roslynator.Analyzers"
-       Version="4.12.9">
+       Version="4.12.10">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference
        Include="Roslynator.CodeAnalysis.Analyzers"
-       Version="4.12.9">
+       Version="4.12.10">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference
        Include="Roslynator.Formatting.Analyzers"
-       Version="4.12.9">
+       Version="4.12.10">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference
        Include="Roslynator.CodeFixes"
-       Version="4.12.9">
+       Version="4.12.10">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference
        Include="Roslynator.Refactorings"
-       Version="4.12.9">
+       Version="4.12.10">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference
        Include="Meziantou.Analyzer"
-       Version="2.0.182">
+       Version="2.0.184">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -118,11 +118,11 @@
     <PackageReference Include="ConcurrencyLab.ParallelChecker" Version="2.7.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="SharpSource" Version="1.25.2">
+    <PackageReference Include="SharpSource" Version="1.26.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="SatorImaging.StaticMemberAnalyzer" Version="1.5.0">
+    <PackageReference Include="SatorImaging.StaticMemberAnalyzer" Version="2.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
