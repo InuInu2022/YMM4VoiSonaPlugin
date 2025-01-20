@@ -86,7 +86,7 @@
     </PackageReference>
     <PackageReference
        Include="Meziantou.Analyzer"
-       Version="2.0.184">
+       Version="2.0.186">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -118,7 +118,7 @@
     <PackageReference Include="ConcurrencyLab.ParallelChecker" Version="2.7.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="SharpSource" Version="1.26.0">
+    <PackageReference Include="SharpSource" Version="1.27.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
