@@ -2,6 +2,11 @@
 
 ![cover](https://github.com/InuInu2022/YMM4VoiSonaPlugin/blob/main/docs/images/ymm4voisonatalkpluginthum.png?raw=true)
 
+## Video
+
+- YMM4 VoiSona Talkプラグインの紹介！
+  - [![YMM4 VoiSona Talkプラグインの紹介！](http://img.youtube.com/vi/YS3bX3I5OHg/mqdefault.jpg)](https://youtu.be/YS3bX3I5OHg)
+
 ## これはなに？
 
 YMM4のボイスとして **「VoiSona Talk」(ボイソナトーク)** を使えるようにしたプラグインです。
