@@ -61,7 +61,7 @@
         <StackPanel>
           <TextBlock Margin="5" TextWrapping="Wrap">VoiSona Talkに対応した非公式プラグインです。</TextBlock>
           <TextBlock Margin="5" TextWrapping="Wrap">このプラグインが原因のエラーはVoiSona TalkやYMM4本体の開発者ではなく、いぬいぬ（InuInu2022）にご連絡ください。</TextBlock>
-          <TextBlock Margin="5">Ⓒ InuInu 2024</TextBlock>
+          <TextBlock Margin="5">Ⓒ InuInu 2024 - </TextBlock>
           <Button x:Name="GoToGithub" Content="Open Github"
             Command="{Binding OpenGithub}"
             />
@@ -70,7 +70,7 @@
       <GroupBox Header="VoiSona Talkについて" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10">
         <StackPanel>
           <TextBlock Margin="5" TextWrapping="Wrap">VoiSona TalkはTechno-Speech, Incによって開発された最新のAI技術で人間の話し方をリアルに再現する音声創作ソフトウェアです。</TextBlock>
-          <TextBlock Margin="5" TextWrapping="Wrap">Copyright © 2022-2024 Techno-Speech, Inc. All Right Reserved.</TextBlock>
+          <TextBlock Margin="5" TextWrapping="Wrap">Copyright © 2022-2025 Techno-Speech, Inc. All Right Reserved.</TextBlock>
         </StackPanel>
       </GroupBox>
     </StackPanel>
