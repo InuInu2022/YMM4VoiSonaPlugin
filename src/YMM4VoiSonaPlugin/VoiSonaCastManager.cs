@@ -17,6 +17,8 @@ public static class VoiSonaCastManager
 		{"Hanakuma Chifuyu", new ("https://voisona.com/static/pdf/ja/hanakuma-chifuyu_guidelines.pdf","TOKYO6 ENTERTAINMENT", "nc309924") },
 		{"Tamaki", new ("https://voisona.com/static/pdf/ja/tamaki_guidelines.pdf","のりプロ", "") },
 		{"Soyogi Soyogi", new ("https://voisona.com/static/pdf/ja/soyogi-soyogi_guidelines.pdf","そよぎフラクタル", "") },
+		{"IA", new ("https://voisona.com/static/pdf/ja/ia_guidelines.pdf","1st PLACE", "") },
+		{"OИE", new ("https://voisona.com/static/pdf/ja/one_guidelines.pdf","1st PLACE", "") },
 	};
 	#pragma warning restore S1075 // URIs should not be hardcoded
 
@@ -39,7 +41,7 @@ public static class VoiSonaCastManager
 	{
 		var result = castData.TryGetValue(castName, out var data);
 		return !result || data is null
-			? throw new ArgumentException($"cast [{castName}] data is not found!", nameof(castName))
+			? new CastData("","","")
 			: data;
 	}
 }
