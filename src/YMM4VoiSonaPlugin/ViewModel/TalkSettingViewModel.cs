@@ -61,7 +61,7 @@ public class TalkSettingViewModel
 			try
 			{
 				var result = await checker.GetDownloadUrlAsync(
-					"YMM4VoiSonaPlugin.ymme",
+					"YMM4VoiSonaPlugin.",
 					"https://github.com/InuInu2022/YMM4VoiSonaPlugin/releases")
 					.ConfigureAwait(false);
 				await OpenUrlAsync(result)

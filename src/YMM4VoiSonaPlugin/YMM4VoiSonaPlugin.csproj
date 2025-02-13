@@ -75,9 +75,19 @@
   </Target>
   <Target Name="CleanBeforePublish" BeforeTargets="BeforePublish">
     <RemoveDir Directories="$(OutputPath)/publish/" />
+    <RemoveDir Directories="$(OutputPath)/ymme/" />
   </Target>
   <Target Name="MakeZipPackage" AfterTargets="Publish">
-    <MakeDir Directories="$(OutputPath)/../../../../../publish/" />
+
+    <PropertyGroup>
+      <ZipFileName>YMM4VoiSonaPlugin.v.$(Version).ymme</ZipFileName>
+      <ZipDestination>$(OutputPath)/../../../../../publish/$(ZipFileName)</ZipDestination>
+      <PackageFolder>$(OutputPath)/ymme/YMM4VoiSonaPlugin</PackageFolder>
+      <ZipSource>$(OutputPath)/ymme</ZipSource>
+    </PropertyGroup>
+
+    <MakeDir Directories="$(PackageFolder)" />
+
     <ItemGroup>
       <FilesToDelete Include="$(OutputPath)\publish\Vortice.*.dll" />
       <FilesToDelete Include="$(OutputPath)\publish\NCalc.*.dll" />
@@ -112,9 +122,23 @@
     <Delete Files="@(FilesToDelete)">
       <Output TaskParameter="DeletedFiles" ItemName="FilesDeleted" />
     </Delete>
-    <ZipDirectory SourceDirectory="$(OutputPath)/publish/" DestinationFile="$(OutputPath)/../../../../../publish/$(AssemblyName).ymme" Overwrite="true" />
-    <Message Text="Actions After Publish" Importance="high" />
-    <Copy SourceFiles="$(OutputPath)/../../../../../publish/$(AssemblyName).ymme" DestinationFolder="$(YMM4_PATH)\user\plugin\" />
-    <Unzip SourceFiles="$(OutputPath)/../../../../../publish/$(AssemblyName).ymme" DestinationFolder="$(YMM4_PATH)\user\plugin\$(AssemblyName)\" />
+
+    <ItemGroup>
+      <PublishFiles Include="$(OutputPath)/publish/**/*.*" />
+    </ItemGroup>
+    <Copy
+      SourceFiles="@(PublishFiles)"
+      DestinationFiles="@(PublishFiles->'$(PackageFolder)/%(RecursiveDir)%(Filename)%(Extension)')" />
+
+    <!-- Zip the parent directory, which includes the "YMM4VoiSonaPlugin" folder -->
+    <ZipDirectory
+      SourceDirectory="$(ZipSource)"
+      DestinationFile="$(ZipDestination)"
+      Overwrite="true" />
+
+    <Message Text="Zip package created at: $(ZipDestination)" Importance="high" />
+
+    <Copy SourceFiles="$(ZipDestination)" DestinationFolder="$(YMM4_PATH)/user/plugin/" />
+
   </Target>
 </Project>
