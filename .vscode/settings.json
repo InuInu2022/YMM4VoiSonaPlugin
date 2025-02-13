@@ -1,4 +1,14 @@
 {
+    "workbench.colorCustomizations": {
+        "titleBar.activeBackground": "#ffaa00",
+        "titleBar.activeForeground": "#000000",
+        "activityBar.background": "#ffaa00",
+        "activityBar.foreground": "#000000",
+
+        //outline icons color
+        "symbolIcon.functionForeground":"#ffffffc5",
+        "symbolIcon.methodForeground":"#f5f2b4"
+    },
 	"cSpell.words": [
 		"Chifuyu",
 		"Futaba",
