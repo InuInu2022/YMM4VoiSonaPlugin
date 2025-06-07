@@ -19,6 +19,7 @@ public static class VoiSonaCastManager
 		{"Soyogi Soyogi", new ("https://voisona.com/static/pdf/ja/soyogi-soyogi_guidelines.pdf","そよぎフラクタル", "") },
 		{"IA", new ("https://voisona.com/static/pdf/ja/ia_guidelines.pdf","1st PLACE", "") },
 		{"OИE", new ("https://voisona.com/static/pdf/ja/one_guidelines.pdf","1st PLACE", "") },
+		{"LeuR", new("https://voisona.com/static/pdf/ja/leur_guidelines.pdf","rurudot","") },
 	};
 	#pragma warning restore S1075 // URIs should not be hardcoded
 

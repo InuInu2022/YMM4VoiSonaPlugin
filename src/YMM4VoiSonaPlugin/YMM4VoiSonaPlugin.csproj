@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Epoxy.Wpf" Version="1.16.0" />
-    <PackageReference Include="FlaUI.UIA3" Version="4.0.0" />
+    <PackageReference Include="FlaUI.UIA3" Version="5.0.0" />
   </ItemGroup>
   <Target Name="RemovePublishDirBeforeBuild" BeforeTargets="BeforeBuild">
     <RemoveDir Directories="$(YMM4_PATH)\user\plugin\$(AssemblyName)\" />
