@@ -4,6 +4,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <NoWarn>$(NoWarn);MSB3277</NoWarn>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <ILRepackTargetConfigurations>Debug;Release</ILRepackTargetConfigurations>
   </PropertyGroup>
   <ItemGroup>
     <!-- README -->
@@ -52,6 +53,10 @@
   <ItemGroup>
     <PackageReference Include="Epoxy.Wpf" Version="1.16.0" />
     <PackageReference Include="FlaUI.UIA3" Version="5.0.0" />
+    <PackageReference Include="ILRepack.FullAuto" Version="1.6.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
   <Target Name="RemovePublishDirBeforeBuild" BeforeTargets="BeforeBuild">
     <RemoveDir Directories="$(YMM4_PATH)\user\plugin\$(AssemblyName)\" />
@@ -126,15 +131,10 @@
     <ItemGroup>
       <PublishFiles Include="$(OutputPath)/publish/**/*.*" />
     </ItemGroup>
-    <Copy
-      SourceFiles="@(PublishFiles)"
-      DestinationFiles="@(PublishFiles->'$(PackageFolder)/%(RecursiveDir)%(Filename)%(Extension)')" />
+    <Copy SourceFiles="@(PublishFiles)" DestinationFiles="@(PublishFiles->'$(PackageFolder)/%(RecursiveDir)%(Filename)%(Extension)')" />
 
     <!-- Zip the parent directory, which includes the "YMM4VoiSonaPlugin" folder -->
-    <ZipDirectory
-      SourceDirectory="$(ZipSource)"
-      DestinationFile="$(ZipDestination)"
-      Overwrite="true" />
+    <ZipDirectory SourceDirectory="$(ZipSource)" DestinationFile="$(ZipDestination)" Overwrite="true" />
 
     <Message Text="Zip package created at: $(ZipDestination)" Importance="high" />
 
