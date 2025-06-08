@@ -9,8 +9,9 @@
  | FlaUI.Core                                          | 4.0.0                                           | LICENSE.txt  | https://www.nuget.org/packages/FlaUI.Core/4.0.0/License                      | 
  | FlaUI.UIA3                                          | 4.0.0                                           | LICENSE.txt  | https://www.nuget.org/packages/FlaUI.UIA3/4.0.0/License                      | 
  | GithubReleaseDownloader                             | 1.0.0                                           | MIT          | https://licenses.nuget.org/MIT                                               | 
+ | ILRepack.FullAuto                                   | 1.6.0                                           | MIT          | https://licenses.nuget.org/MIT                                               | 
  | Interop.UIAutomationClient                          | 10.19041.0                                      | LICENSE.txt  | https://www.nuget.org/packages/Interop.UIAutomationClient/10.19041.0/License | 
- | Jab                                                 | 0.10.2                                          |              |                                                                              | 
+ | Jab                                                 | 0.11.0                                          | MIT          | https://licenses.nuget.org/MIT                                               | 
  | Mayerch1.GithubUpdateCheck                          | 1.2.1                                           | MIT          | https://licenses.nuget.org/MIT                                               | 
  | Microsoft.CodeCoverage                              | 17.12.0                                         | MIT          | https://licenses.nuget.org/MIT                                               | 
  | Microsoft.CSharp                                    | 4.3.0                                           | MS-EULA      | http://go.microsoft.com/fwlink/?LinkId=329770                                | 
