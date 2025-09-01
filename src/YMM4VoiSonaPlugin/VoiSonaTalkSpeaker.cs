@@ -86,18 +86,16 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker, IDisposable
 			Console.WriteLine($"from ymm4 path: {filePath}");
 			var sw = System.Diagnostics.Stopwatch.StartNew();
 
-			await _service.StartAsync().ConfigureAwait(false);
-
 			await _service
 				.SetCastAsync(SpeakerName)
 				.ConfigureAwait(false);
 			sw.Stop();
 			Console.WriteLine($"set cast time: {sw.Elapsed.TotalSeconds}");
 			sw.Restart();
-			if(parameter is VoiSonaTalkParameter vstParam)
+			if (parameter is VoiSonaTalkParameter vstParam)
 			{
 				await _service.SetGlobalParamsAsync(
-					new Dictionary<string,double>(StringComparer.Ordinal)
+					new Dictionary<string, double>(StringComparer.Ordinal)
 					{
 						{nameof(vstParam.Speed), vstParam.Speed},
 						{nameof(vstParam.Volume), vstParam.Volume},
@@ -124,11 +122,12 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker, IDisposable
 				.ConfigureAwait(false);
 			Console.WriteLine($"output time: {sw.Elapsed.TotalSeconds}");
 
-			if(!result){
+			if (!result)
+			{
 				await Console.Error
 					.WriteLineAsync($"ERROR! {nameof(CreateVoiceAsync)} : {text}")
 					.ConfigureAwait(false);
-				await UIThread.InvokeAsync(()=>
+				await UIThread.InvokeAsync(() =>
 				{
 					TaskbarUtil.ShowError();
 					SetFocusToMainView();
@@ -137,22 +136,25 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker, IDisposable
 				}).ConfigureAwait(false);
 			}
 		}
-		catch(Exception ex)
+		catch (Exception ex)
 		{
 			await Console.Error
 				.WriteLineAsync($"ERROR! {ex.Message}")
 				.ConfigureAwait(false);
-			await UIThread.InvokeAsync(()=>{
+			await UIThread.InvokeAsync(() =>
+			{
 				TaskbarUtil.ShowError();
 				SetFocusToMainView();
 				return ValueTask.CompletedTask;
 			}).ConfigureAwait(false);
+			throw new ApplicationException("VoiSona Talkでの合成に失敗しました＞＜！ごめんね！ YMM4とVoiSona Talkの再起動で直るかも？:\n", ex);
 		}
 		finally
 		{
 			Semaphore.Release();
 
-			await UIThread.InvokeAsync(()=>{
+			await UIThread.InvokeAsync(() =>
+			{
 				TaskbarUtil.FinishIndeterminate();
 				SetFocusToMainView();
 				return ValueTask.CompletedTask;
