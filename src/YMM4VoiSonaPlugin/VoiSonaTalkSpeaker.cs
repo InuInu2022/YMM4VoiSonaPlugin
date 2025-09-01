@@ -116,6 +116,7 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 				.OutputWaveToFileAsync(text, filePath)
 				.ConfigureAwait(false);
 			Console.WriteLine($"output time: {sw.Elapsed.TotalSeconds}");
+
 			if(!result){
 				await Console.Error
 					.WriteLineAsync($"ERROR! {nameof(CreateVoiceAsync)} : {text}")
@@ -156,12 +157,12 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 	static void SetFocusToMainView()
 	{
 		var mw = WindowUtil.GetYmmMainWindow();
-		Console.WriteLine("MainView: " + (mw?.Title ?? "(null)"));
+		Console.WriteLine("MainView: " + (mw.Title ?? "(null)"));
 		mw?.Topmost = true;
 		mw?.Topmost = false;
 		mw?.Activate();
 		var w = FocusHelper.DefaultFocus;
-		Console.WriteLine("Focused Window: " + (w?.Name ?? "(null)"));
+		Console.WriteLine("Focused Window: " + (w.Name ?? "(null)"));
 		if (w is not null) FocusHelper.FocusWindowContent(w);
 	}
 
