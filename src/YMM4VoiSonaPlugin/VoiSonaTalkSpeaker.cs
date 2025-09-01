@@ -121,6 +121,8 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 					.ConfigureAwait(false);
 				await UIThread.InvokeAsync(()=>{
 					TaskbarUtil.ShowError();
+					WindowUtil.GetYmmMainWindow().Activate();
+					WindowUtil.FocusBack();
 					return ValueTask.CompletedTask;
 				}).ConfigureAwait(false);
 			}
