@@ -157,6 +157,8 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 	{
 		var mw = WindowUtil.GetYmmMainWindow();
 		Console.WriteLine("MainView: " + (mw?.Title ?? "(null)"));
+		mw?.Topmost = true;
+		mw?.Topmost = false;
 		mw?.Activate();
 		var w = FocusHelper.DefaultFocus;
 		Console.WriteLine("Focused Window: " + (w?.Name ?? "(null)"));
