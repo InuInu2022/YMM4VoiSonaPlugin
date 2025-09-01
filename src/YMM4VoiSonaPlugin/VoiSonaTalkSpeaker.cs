@@ -12,6 +12,7 @@ using YMM4VoiSonaPlugin.ViewModel;
 
 using YmmeUtil.Ymm4;
 
+using YukkuriMovieMaker.Commons;
 using YukkuriMovieMaker.Plugin.Voice;
 
 namespace YMM4VoiSonaPlugin;
@@ -119,10 +120,11 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 				await Console.Error
 					.WriteLineAsync($"ERROR! {nameof(CreateVoiceAsync)} : {text}")
 					.ConfigureAwait(false);
-				await UIThread.InvokeAsync(()=>{
+				await UIThread.InvokeAsync(()=>
+				{
 					TaskbarUtil.ShowError();
-					WindowUtil.GetYmmMainWindow()?.Activate();
-					WindowUtil.FocusBack();
+					SetFocusToMainView();
+
 					return ValueTask.CompletedTask;
 				}).ConfigureAwait(false);
 			}
@@ -134,8 +136,7 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 				.ConfigureAwait(false);
 			await UIThread.InvokeAsync(()=>{
 				TaskbarUtil.ShowError();
-				WindowUtil.GetYmmMainWindow()?.Activate();
-				WindowUtil.FocusBack();
+				SetFocusToMainView();
 				return ValueTask.CompletedTask;
 			}).ConfigureAwait(false);
 		}
@@ -145,12 +146,21 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 
 			await UIThread.InvokeAsync(()=>{
 				TaskbarUtil.FinishIndeterminate();
-				WindowUtil.GetYmmMainWindow().Activate();
-				WindowUtil.FocusBack();
+				SetFocusToMainView();
 				return ValueTask.CompletedTask;
 			}).ConfigureAwait(false);
 		}
 		return new VoiSonaTalkPronounce();
+	}
+
+	static void SetFocusToMainView()
+	{
+		var mw = WindowUtil.GetYmmMainWindow();
+		Console.WriteLine("MainView: " + (mw?.Title ?? "(null)"));
+		mw?.Activate();
+		var w = FocusHelper.DefaultFocus;
+		Console.WriteLine("Focused Window: " + (w?.Name ?? "(null)"));
+		if (w is not null) FocusHelper.FocusWindowContent(w);
 	}
 
 	public IVoiceParameter CreateVoiceParameter()
