@@ -158,7 +158,7 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 	{
 		var mw = WindowUtil.GetYmmMainWindow();
 		Console.WriteLine("MainView: " + (mw.Title ?? "(null)"));
-		if(mv is not null){
+		if(mw is not null){
 			mw.Topmost = true;
 			mw.Topmost = false;
 			mw.Activate();
