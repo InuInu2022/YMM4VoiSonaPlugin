@@ -17,7 +17,7 @@ using YukkuriMovieMaker.Plugin.Voice;
 
 namespace YMM4VoiSonaPlugin;
 
-public class VoiSonaTalkSpeaker : IVoiceSpeaker
+public class VoiSonaTalkSpeaker : IVoiceSpeaker, IDisposable
 {
 	public string EngineName => "VoiSona Talk";
 	public string SpeakerName { get; }
@@ -37,9 +37,12 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 	static readonly ITalkAutoService _service = new TalkServiceProvider()
 		.GetService<ITalkAutoService>();
 
+	readonly DisposeCollector disposer = new();
+
 	readonly string _voiceName;
 	ReadOnlyDictionary<string, double> _styles;
 	IReadOnlyList<string> _presets;
+	bool _disposedValue;
 
 	public VoiSonaTalkSpeaker(string voiceName)
 	{
@@ -54,6 +57,7 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 		_voiceName = voiceName;
 		_styles = new(new Dictionary<string, double>(StringComparer.Ordinal));
 		_presets = [];
+		disposer.Collect(_service);
 	}
 
 	public async Task<string> ConvertKanjiToYomiAsync(string text, IVoiceParameter voiceParameter)
@@ -81,6 +85,9 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 		{
 			Console.WriteLine($"from ymm4 path: {filePath}");
 			var sw = System.Diagnostics.Stopwatch.StartNew();
+
+			await _service.StartAsync().ConfigureAwait(false);
+
 			await _service
 				.SetCastAsync(SpeakerName)
 				.ConfigureAwait(false);
@@ -157,14 +164,14 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 	static void SetFocusToMainView()
 	{
 		var mw = WindowUtil.GetYmmMainWindow();
-		Console.WriteLine("MainView: " + (mw.Title ?? "(null)"));
+		Console.WriteLine("MainView: " + (mw?.Title ?? "(null)"));
 		if(mw is not null){
 			mw.Topmost = true;
 			mw.Topmost = false;
 			mw.Activate();
 		}
 		var w = FocusHelper.DefaultFocus;
-		Console.WriteLine("Focused Window: " + (w.Name ?? "(null)"));
+		Console.WriteLine("Focused Window: " + (w?.Name ?? "(null)"));
 		if (w is not null) FocusHelper.FocusWindowContent(w);
 	}
 
@@ -209,5 +216,34 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker
 		//声質切替で固有Styleが切り替わらないので強制再読み込みを掛ける
 		var isSame = string.Equals(vsParam.Voice, _voiceName, StringComparison.Ordinal);
 		return isSame ? currentParameter : CreateVoiceParameter();
+	}
+
+	protected virtual void Dispose(bool disposing)
+	{
+		if (!_disposedValue)
+		{
+			if (disposing)
+			{
+				disposer.DisposeAndClear();
+			}
+
+			// TODO: アンマネージド リソース (アンマネージド オブジェクト) を解放し、ファイナライザーをオーバーライドします
+			// TODO: 大きなフィールドを null に設定します
+			_disposedValue = true;
+		}
+	}
+
+	// // TODO: 'Dispose(bool disposing)' にアンマネージド リソースを解放するコードが含まれる場合にのみ、ファイナライザーをオーバーライドします
+	// ~VoiSonaTalkSpeaker()
+	// {
+	//     // このコードを変更しないでください。クリーンアップ コードを 'Dispose(bool disposing)' メソッドに記述します
+	//     Dispose(disposing: false);
+	// }
+
+	public void Dispose()
+	{
+		// このコードを変更しないでください。クリーンアップ コードを 'Dispose(bool disposing)' メソッドに記述します
+		Dispose(disposing: true);
+		GC.SuppressFinalize(this);
 	}
 }
