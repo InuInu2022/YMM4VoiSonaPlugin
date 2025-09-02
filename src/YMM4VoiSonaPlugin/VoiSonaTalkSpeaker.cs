@@ -86,6 +86,10 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker, IDisposable
 			Console.WriteLine($"from ymm4 path: {filePath}");
 			var sw = System.Diagnostics.Stopwatch.StartNew();
 
+			//TODO:トラック追加の右クリックウィンドウにフォーカスうつってしまう問題あり
+
+			await _service.StartAsync().ConfigureAwait(false);
+
 			await _service
 				.SetCastAsync(SpeakerName)
 				.ConfigureAwait(false);
@@ -147,7 +151,7 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker, IDisposable
 				SetFocusToMainView();
 				return ValueTask.CompletedTask;
 			}).ConfigureAwait(false);
-			throw new ApplicationException("VoiSona Talkでの合成に失敗しました＞＜！ごめんね！ YMM4とVoiSona Talkの再起動で直るかも？:\n", ex);
+			throw new ApplicationException($"VoiSona Talkでの合成に失敗しました＞＜！ごめんね！ YMM4とVoiSona Talkの再起動で直るかも？:\n{ex.Message}", ex);
 		}
 		finally
 		{
