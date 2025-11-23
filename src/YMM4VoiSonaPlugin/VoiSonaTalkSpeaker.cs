@@ -37,7 +37,7 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker, IDisposable
 	static readonly ITalkAutoService _service = new TalkServiceProvider()
 		.GetService<ITalkAutoService>();
 
-	readonly DisposeCollector disposer = new();
+	readonly DisposeCollector _disposer = new();
 
 	readonly string _voiceName;
 	ReadOnlyDictionary<string, double> _styles;
@@ -57,7 +57,7 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker, IDisposable
 		_voiceName = voiceName;
 		_styles = new(new Dictionary<string, double>(StringComparer.Ordinal));
 		_presets = [];
-		disposer.Collect(_service);
+		_disposer.Collect(_service);
 	}
 
 	public async Task<string> ConvertKanjiToYomiAsync(string text, IVoiceParameter voiceParameter)
@@ -230,7 +230,7 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker, IDisposable
 		{
 			if (disposing)
 			{
-				disposer.DisposeAndClear();
+				_disposer.DisposeAndClear();
 			}
 
 			// TODO: アンマネージド リソース (アンマネージド オブジェクト) を解放し、ファイナライザーをオーバーライドします

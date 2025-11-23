@@ -19,6 +19,22 @@ public class TalkSettingViewModel
 	public string? PluginVersion { get; }
 	public string UpdateMessage { get; set; } = "Update checkボタンを押してください";
 
+	public string UserName
+	{
+		get { return VoiSonaTalkSettings.Default.UserName; }
+		set { VoiSonaTalkSettings.Default.UserName = value; }
+	}
+	public string Password
+	{
+		get { return VoiSonaTalkSettings.Default.Password; }
+		set { VoiSonaTalkSettings.Default.Password = value; }
+	}
+	public int ApiPort
+	{
+		get { return VoiSonaTalkSettings.Default.ApiPort; }
+		set { VoiSonaTalkSettings.Default.ApiPort = value; }
+	}
+
 	public bool IsPreloading { get;set;}
 	public bool IsPreloadButtonEnabled { get; set; } = true;
 	public bool HasUpdate { get; set; }

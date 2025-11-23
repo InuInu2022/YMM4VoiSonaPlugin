@@ -56,15 +56,33 @@ public partial class VoiSonaTalkSettings : SettingsBase<VoiSonaTalkSettings>
 		set { Set(ref _speakersPresets, value); }
 	}
 
+	public string UserName
+	{
+		get { return _userName; }
+		set { Set(ref _userName, value); }
+	}
+	public string Password
+	{
+		get { return _password; }
+		set { Set(ref _password, value); }
+	}
+	public int ApiPort
+	{
+		get { return _apiPort; }
+		set { Set(ref _apiPort, value); }
+	}
 	ITalkAutoService? _service;
 	bool _isCached;
 	string[] _speakers = [];
 	Dictionary<string, Dictionary<string, double>> _speakersStyles = new(StringComparer.Ordinal);
 	Dictionary<string, IList<string>> _speakersPresets = new(StringComparer.Ordinal);
+	private string _userName = string.Empty;
+	private string _password = string.Empty;
+	private int _apiPort = 32766;
 
 	public override void Initialize()
 	{
-		var provider = new TalkServiceProvider();
+		using var provider = new TalkServiceProvider();
 		_service = provider.GetService<ITalkAutoService>();
 	}
 

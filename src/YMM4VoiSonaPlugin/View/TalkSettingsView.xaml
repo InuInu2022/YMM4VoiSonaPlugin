@@ -1,12 +1,14 @@
 <UserControl x:Class="YMM4VoiSonaPlugin.View.TalkSettingsView"
-       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-       xmlns:local="clr-namespace:YMM4VoiSonaPlugin.View"
-       xmlns:viewmodels="clr-namespace:YMM4VoiSonaPlugin.ViewModel"
-       mc:Ignorable="d"
-       d:DesignHeight="450" d:DesignWidth="800">
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:core="clr-namespace:YMM4VoiSonaPlugin"
+  xmlns:local="clr-namespace:YMM4VoiSonaPlugin.View"
+  xmlns:viewmodels="clr-namespace:YMM4VoiSonaPlugin.ViewModel"
+  xmlns:behaviors="clr-namespace:YMM4VoiSonaPlugin.Behaviors"
+  mc:Ignorable="d"
+  d:DesignHeight="450" d:DesignWidth="800">
   <ScrollViewer
     HorizontalAlignment="Stretch"
     VerticalAlignment="Stretch"
@@ -16,10 +18,13 @@
       <Expander Header="YMM4 VoiSonaTalk Plugin" IsExpanded="True">
         <Grid Margin="10">
           <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
           </Grid.RowDefinitions>
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -27,34 +32,104 @@
           </Grid.ColumnDefinitions>
 
           <Label
-            Content="Plugin version"
+            Content="API User name"
             Grid.Row="0" Grid.Column="0"
+          />
+          <TextBox x:Name="UserName"
+            Text="{Binding Source={x:Static core:VoiSonaTalkSettings.Default}, Path=UserName}"
+            IsReadOnly="False"
+            Grid.Row="0" Grid.Column="1" />
+
+          <Label
+            Content="API Password"
+            Grid.Row="1" Grid.Column="0"
+          />
+          <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 非表示（マスク）用 -->
+          <!--
+            <PasswordBox x:Name="PasswordBoxMasked"
+                         Grid.Column="0"
+                         behaviors:PasswordBoxHelper.BindPassword="True"
+                         behaviors:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+              <PasswordBox.Style>
+                <Style TargetType="PasswordBox">
+                  <Setter Property="Visibility" Value="Visible"/>
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsChecked, ElementName=ShowPassword}" Value="True">
+                      <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </PasswordBox.Style>
+            </PasswordBox>
+          -->
+
+            <!-- 表示（平文）用 -->
+            <TextBox x:Name="PasswordPlainText"
+                     Grid.Column="0"
+                     Text="{Binding Source={x:Static core:VoiSonaTalkSettings.Default}, Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+              <TextBox.Style>
+                <Style TargetType="TextBox">
+                  <Setter Property="Visibility" Value="Collapsed"/>
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsChecked, ElementName=ShowPassword}" Value="True">
+                      <Setter Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </TextBox.Style>
+            </TextBox>
+
+            <!-- 表示/非表示トグル -->
+            <ToggleButton x:Name="ShowPassword"
+                          Grid.Column="1"
+                          Content="👁️‍🗨️"
+                          Margin="6,0,0,0"
+                          VerticalAlignment="Center"
+                          ToolTip="パスワードを表示/非表示します"/>
+          </Grid>
+
+          <Label
+            Content="API port"
+            Grid.Row="2" Grid.Column="0"
+          />
+          <TextBox x:Name="ApiPort"
+            Text="{Binding Source={x:Static core:VoiSonaTalkSettings.Default}, Path=ApiPort, Mode=TwoWay}"
+            IsReadOnly="False"
+            Grid.Row="2" Grid.Column="1" />
+
+          <Label
+            Content="Plugin version"
+            Grid.Row="3" Grid.Column="0"
             />
           <TextBox x:Name="PluginVersion"
             Text="{Binding PluginVersion, Mode=OneWay}"
             IsReadOnly="True"
-            Grid.Row="0" Grid.Column="1" />
+            Grid.Row="3" Grid.Column="1" />
 
           <Label Content="ボイスライブラリ切替高速化（※時間がかかります）"
             ToolTip="VoiSona Talkは別トラックにボイスを割り当てていると速くボイス切替ができます。事前に利用しないトラックにすべてのボイスを割り当てます。"
-            Grid.Row="1" Grid.Column="0" />
+            Grid.Row="4" Grid.Column="0" />
           <Button x:Name="PreloadVoice" Content="ボイスのプリロード"
             Command="{Binding PreloadVoice}"
             IsEnabled="{Binding IsPreloadButtonEnabled}"
-            Grid.Row="1" Grid.Column="1" />
-
+            Grid.Row="4" Grid.Column="1" />
           <Label Content="{Binding UpdateMessage}"
             IsEnabled="{Binding HasUpdate}"
-            Grid.Row="2" Grid.Column="0" />
+            Grid.Row="5" Grid.Column="0" />
           <Button x:Name="UpdateCheck" Content="Update check"
             Command="{Binding UpdateCheck}"
             IsEnabled="{Binding IsUpdateCheckEnabled}"
-            Grid.Row="2" Grid.Column="1" />
-
+            Grid.Row="5" Grid.Column="1" />
           <Button x:Name="Download" Content="Download"
             Command="{Binding Download}"
             IsEnabled="{Binding IsDownloadable}"
-            Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" />
+            Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" />
         </Grid>
       </Expander>
       <GroupBox Header="YMM4 VoiSona Talk Pluginについて" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10">
