@@ -176,9 +176,9 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker, IDisposable
 			mw.Topmost = false;
 			mw.Activate();
 		}
-		var w = FocusHelper.DefaultFocus;
-		Console.WriteLine("Focused Window: " + (w?.Name ?? "(null)"));
-		if (w is not null) FocusHelper.FocusWindowContent(w);
+		//var w = FocusHelper.DefaultFocus;
+		//Console.WriteLine("Focused Window: " + (w?.Name ?? "(null)"));
+		//if (w is not null) FocusHelper.FocusWindowContent(w);
 	}
 
 	public IVoiceParameter CreateVoiceParameter()
