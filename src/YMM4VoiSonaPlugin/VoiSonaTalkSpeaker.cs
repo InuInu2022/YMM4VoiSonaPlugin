@@ -88,7 +88,11 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker, IDisposable
 
 			//TODO:トラック追加の右クリックウィンドウにフォーカスうつってしまう問題あり
 
-			await _service.StartAsync().ConfigureAwait(false);
+			await _service.StartAsync(
+				SecureManager.Decrypt(VoiSonaTalkSettings.Default.UserName),
+				SecureManager.Decrypt(VoiSonaTalkSettings.Default.Password),
+				VoiSonaTalkSettings.Default.ApiPort
+			).ConfigureAwait(false);
 
 			await _service
 				.SetCastAsync(SpeakerName)

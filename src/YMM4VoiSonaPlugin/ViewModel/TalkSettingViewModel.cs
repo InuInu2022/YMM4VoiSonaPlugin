@@ -126,7 +126,11 @@ public class TalkSettingViewModel
 
 		var provider = new TalkServiceProvider();
 		using var service = provider.GetService<ITalkAutoService>();
-		await service.StartAsync().ConfigureAwait(true);
+		await service.StartAsync(
+			SecureManager.Decrypt(VoiSonaTalkSettings.Default.UserName),
+			SecureManager.Decrypt(VoiSonaTalkSettings.Default.Password),
+			VoiSonaTalkSettings.Default.ApiPort
+		).ConfigureAwait(true);
 
 		IsPreloading = false;
 		IsPreloadButtonEnabled = true;

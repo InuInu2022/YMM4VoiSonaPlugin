@@ -106,6 +106,14 @@ public partial class VoiSonaTalkSettings : SettingsBase<VoiSonaTalkSettings>
 			return ValueTask.CompletedTask;
 		}).ConfigureAwait(false);
 
+		await _service
+			.StartAsync(
+				SecureManager.Decrypt(UserName),
+				SecureManager.Decrypt(Password),
+				ApiPort
+			)
+			.ConfigureAwait(false);
+
 		Speakers = await _service
 			.GetAvailableCastsAsync()
 			.ConfigureAwait(false);

@@ -47,13 +47,13 @@ public partial class VoiSonaTalkParameter : VoiceParameterBase
 	#endregion
 
 
-	[Display(Name = "プリセット", Description = "プリセットを選択")]
+	[Display(GroupName="グローバルパラメータ", Name = "プリセット", Description = "プリセットを選択")]
 	[VoiSonaTalkPresetDisplay]
 	public ImmutableList<string>? Preset {get => _preset; set => Set(ref _preset, value); }
 
 	public int PresetIndex { get; set; } = -1;
 
-	[Display(Name = nameof(Speed), Description = "話速を調整")]
+	[Display(GroupName = "グローバルパラメータ", Name = nameof(Speed), Description = "話速を調整")]
 	[TextBoxSlider("F2", "", 0.2, 5, Delay = -1)]
 	[Range(0.2, 5)]
 	[DefaultValue(1.0)]
@@ -63,7 +63,7 @@ public partial class VoiSonaTalkParameter : VoiceParameterBase
 		set => Set(ref _speed, value);
 	}
 
-	[Display(Name = nameof(Volume), Description = "ボリュームを調整")]
+	[Display(GroupName="グローバルパラメータ", Name = nameof(Volume), Description = "ボリュームを調整")]
 	[TextBoxSlider("F2", "", -8, 8, Delay = -1)]
 	[Range(-8, 8)]
 	[DefaultValue(0.0)]
@@ -73,7 +73,7 @@ public partial class VoiSonaTalkParameter : VoiceParameterBase
 		set => Set(ref _volume, value);
 	}
 
-	[Display(Name = nameof(Pitch), Description = "ピッチの高さを調整")]
+	[Display(GroupName="グローバルパラメータ", Name = nameof(Pitch), Description = "ピッチの高さを調整")]
 	[TextBoxSlider("F2", "", -600, 600, Delay = -1)]
 	[Range(-600, 600)]
 	[DefaultValue(0.0)]
@@ -83,7 +83,7 @@ public partial class VoiSonaTalkParameter : VoiceParameterBase
 		set => Set(ref _pitch, value);
 	}
 
-	[Display(Name = nameof(Alpha), Description = "声質の詳細を調整")]
+	[Display(GroupName="グローバルパラメータ", Name = nameof(Alpha), Description = "声質の詳細を調整")]
 	[TextBoxSlider("F2", "", -1, 1, Delay = -1)]
 	[Range(-1, 1)]
 	[DefaultValue(0.0)]
@@ -93,7 +93,7 @@ public partial class VoiSonaTalkParameter : VoiceParameterBase
 		set => Set(ref _alpha, value);
 	}
 
-	[Display(Name = "Into.", Description = "抑揚を調整")]
+	[Display(GroupName = "グローバルパラメータ", Name = "Into.", Description = "抑揚を調整")]
 	[TextBoxSlider("F2", "", 0.0, 2, Delay = -1)]
 	[Range(0, 2)]
 	[DefaultValue(1.0)]
@@ -103,7 +103,7 @@ public partial class VoiSonaTalkParameter : VoiceParameterBase
 		set => Set(ref _intonation, value);
 	}
 
-	[Display(Name = "Hus.", Description = "声質の擦れ具合を調整")]
+	[Display(GroupName="グローバルパラメータ", Name = "Hus.", Description = "声質の擦れ具合を調整")]
 	[TextBoxSlider("F2", "", -20, 20, Delay = -1)]
 	[Range(-20, 20)]
 	[DefaultValue(0.0)]
@@ -113,7 +113,7 @@ public partial class VoiSonaTalkParameter : VoiceParameterBase
 		set => Set(ref _husky, value);
 	}
 
-	[Display(AutoGenerateField = true)]
+	[Display(GroupName = "スタイル", AutoGenerateField = true)]
 	[JsonProperty]
 	public ImmutableList<VoiSonaTalkStyleParameter> ItemsCollection
 	{
