@@ -6,7 +6,6 @@
     xmlns:core="clr-namespace:YMM4VoiSonaPlugin"
     xmlns:local="clr-namespace:YMM4VoiSonaPlugin.View"
     xmlns:viewmodels="clr-namespace:YMM4VoiSonaPlugin.ViewModel"
-    xmlns:behaviors="clr-namespace:YMM4VoiSonaPlugin.Behaviors"
     mc:Ignorable="d"
     d:DesignHeight="450" d:DesignWidth="800">
   <ScrollViewer
