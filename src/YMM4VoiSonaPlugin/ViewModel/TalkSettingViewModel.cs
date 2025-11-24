@@ -1,13 +1,7 @@
 using System.Diagnostics;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Shell;
-
 using Epoxy;
-
 using SonaBridge;
 using SonaBridge.Core.Common;
-
 using YmmeUtil.Common;
 using YmmeUtil.Ymm4;
 
@@ -21,21 +15,48 @@ public class TalkSettingViewModel
 
 	public string UserName
 	{
-		get { return VoiSonaTalkSettings.Default.UserName; }
-		set { VoiSonaTalkSettings.Default.UserName = value; }
+		get
+		{
+			var encrypted = VoiSonaTalkSettings.Default.UserName;
+			return string.IsNullOrEmpty(encrypted)
+				? string.Empty
+				: SecureManager.Decrypt(encrypted);
+		}
+		set
+		{
+			var encrypted = SecureManager.Encrypt(value);
+			VoiSonaTalkSettings.Default.UserName = encrypted;
+			VoiSonaTalkSettings.Default.Save();
+		}
 	}
+
 	public string Password
 	{
-		get { return VoiSonaTalkSettings.Default.Password; }
-		set { VoiSonaTalkSettings.Default.Password = value; }
+		get
+		{
+			var encrypted = VoiSonaTalkSettings.Default.Password;
+			return string.IsNullOrEmpty(encrypted)
+				? string.Empty
+				: SecureManager.Decrypt(encrypted);
+		}
+		set
+		{
+			var encrypted = SecureManager.Encrypt(value);
+			VoiSonaTalkSettings.Default.Password = encrypted;
+			VoiSonaTalkSettings.Default.Save();
+		}
 	}
 	public int ApiPort
 	{
 		get { return VoiSonaTalkSettings.Default.ApiPort; }
-		set { VoiSonaTalkSettings.Default.ApiPort = value; }
+		set
+		{
+			VoiSonaTalkSettings.Default.ApiPort = value;
+			VoiSonaTalkSettings.Default.Save();
+		}
 	}
 
-	public bool IsPreloading { get;set;}
+	public bool IsPreloading { get; set; }
 	public bool IsPreloadButtonEnabled { get; set; } = true;
 	public bool HasUpdate { get; set; }
 	public bool IsUpdateCheckEnabled { get; set; } = true;
@@ -52,8 +73,7 @@ public class TalkSettingViewModel
 	{
 		PluginVersion = AssemblyUtil.GetVersionString(typeof(VoiSonaTalkPlugin));
 
-		checker = UpdateChecker
-			.Build("InuInu2022", "YMM4VoiSonaPlugin");
+		checker = UpdateChecker.Build("InuInu2022", "YMM4VoiSonaPlugin");
 
 		PreloadVoice = Command.Factory.Create(PreloadAsync);
 
@@ -76,12 +96,13 @@ public class TalkSettingViewModel
 		{
 			try
 			{
-				var result = await checker.GetDownloadUrlAsync(
-					"YMM4VoiSonaPlugin.",
-					"https://github.com/InuInu2022/YMM4VoiSonaPlugin/releases")
+				var result = await checker
+					.GetDownloadUrlAsync(
+						"YMM4VoiSonaPlugin.",
+						"https://github.com/InuInu2022/YMM4VoiSonaPlugin/releases"
+					)
 					.ConfigureAwait(false);
-				await OpenUrlAsync(result)
-					.ConfigureAwait(false);
+				await OpenUrlAsync(result).ConfigureAwait(false);
 			}
 			catch (Exception e)
 			{
@@ -89,10 +110,10 @@ public class TalkSettingViewModel
 			}
 		});
 
-
-		OpenGithub = Command.Factory.Create(async () =>
-			await OpenUrlAsync("https://github.com/InuInu2022/YMM4VoiSonaPlugin")
-				.ConfigureAwait(false)
+		OpenGithub = Command.Factory.Create(
+			async () =>
+				await OpenUrlAsync("https://github.com/InuInu2022/YMM4VoiSonaPlugin")
+					.ConfigureAwait(false)
 		);
 	}
 
@@ -115,16 +136,17 @@ public class TalkSettingViewModel
 
 	static async Task<Process> OpenUrlAsync(string openUrl)
 	{
-		return await Task.Run(()
-			=> Process.Start(new ProcessStartInfo()
-			{
-				FileName = openUrl,
-				UseShellExecute = true,
-			}) ?? new()
-		).ConfigureAwait(false);
+		return await Task.Run(
+				() =>
+					Process.Start(
+						new ProcessStartInfo() { FileName = openUrl, UseShellExecute = true }
+					) ?? new()
+			)
+			.ConfigureAwait(false);
 	}
 
-	async ValueTask<string> GetUpdateMessageAsync(){
+	async ValueTask<string> GetUpdateMessageAsync()
+	{
 		return HasUpdate
 			? $"プラグインの更新があります {await checker.GetRepositoryVersionAsync().ConfigureAwait(false)}"
 			: "プラグインは最新です";

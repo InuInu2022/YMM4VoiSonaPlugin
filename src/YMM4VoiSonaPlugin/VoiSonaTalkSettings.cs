@@ -1,12 +1,16 @@
-using YukkuriMovieMaker.Plugin;
+using System.Diagnostics.CodeAnalysis;
+
+using Epoxy;
+
 using SonaBridge;
 using SonaBridge.Core.Common;
+
 using YMM4VoiSonaPlugin.ViewModel;
-using YukkuriMovieMaker.Plugin.Voice;
-using System.Collections.ObjectModel;
-using Epoxy;
+
 using YmmeUtil.Ymm4;
-using System.Diagnostics.CodeAnalysis;
+
+using YukkuriMovieMaker.Plugin;
+using YukkuriMovieMaker.Commons;
 
 namespace YMM4VoiSonaPlugin;
 
@@ -80,10 +84,14 @@ public partial class VoiSonaTalkSettings : SettingsBase<VoiSonaTalkSettings>
 	private string _password = string.Empty;
 	private int _apiPort = 32766;
 
+	readonly DisposeCollector _disposer = new();
+
+	[SuppressMessage("Usage", "SMA0040:Missing Using Statement", Justification = "<保留中>")]
 	public override void Initialize()
 	{
 		using var provider = new TalkServiceProvider();
 		_service = provider.GetService<ITalkAutoService>();
+		_disposer.Collect(_service);
 	}
 
 	/// <summary>
@@ -147,5 +155,7 @@ public partial class VoiSonaTalkSettings : SettingsBase<VoiSonaTalkSettings>
 			WindowUtil.FocusBack();
 			return ValueTask.CompletedTask;
 		}).ConfigureAwait(false);
+
+		Save();
 	}
 }
