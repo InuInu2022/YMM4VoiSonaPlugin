@@ -19,6 +19,8 @@ public class TalkPresetsViewModel: IPropertyEditorControl, IDisposable
 {
 	public ObservableCollection<string> Presets { get; set; } = [];
 	public int PresetIndex { get; set; }
+
+	public Command Loaded { get; set; }
 	public Command ReloadPresets { get; set; }
 
 	[IgnoreInject]
@@ -47,6 +49,13 @@ public class TalkPresetsViewModel: IPropertyEditorControl, IDisposable
 		{
 			PresetIndex = presetIndex ?? -1;
 		}
+		Loaded = Command.Factory.Create(async () => {
+			await _service.StartAsync(
+				SecureManager.Decrypt(VoiSonaTalkSettings.Default.UserName),
+				SecureManager.Decrypt(VoiSonaTalkSettings.Default.Password),
+				VoiSonaTalkSettings.Default.ApiPort
+			).ConfigureAwait(true);
+		});
 		ReloadPresets = Command.Factory.Create(async ()=>{
 			var voice = EditorInfo?.Voice?.Speaker?.SpeakerName;
 			if(voice is null) return;

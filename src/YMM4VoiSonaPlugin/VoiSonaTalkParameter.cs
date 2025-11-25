@@ -47,7 +47,7 @@ public partial class VoiSonaTalkParameter : VoiceParameterBase
 	#endregion
 
 
-	[Display(GroupName="グローバルパラメータ", Name = "プリセット", Description = "プリセットを選択")]
+	[Display(GroupName="プリセット(※機能しません)", Name = "プリセット", Description = "プリセットを選択")]
 	[VoiSonaTalkPresetDisplay]
 	public ImmutableList<string>? Preset {get => _preset; set => Set(ref _preset, value); }
 
