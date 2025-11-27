@@ -1,4 +1,3 @@
-
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -219,13 +218,28 @@ public class VoiSonaTalkSpeaker : IVoiceSpeaker, IDisposable
 
 	public IVoiceParameter MigrateParameter(IVoiceParameter currentParameter)
 	{
-		if(currentParameter is not VoiSonaTalkParameter vsParam){
+		if (currentParameter is not VoiSonaTalkParameter vsParam)
+		{
 			return CreateVoiceParameter();
 		}
 
-		//声質切替で固有Styleが切り替わらないので強制再読み込みを掛ける
+		// 声質切替で固有Styleが切り替わらないので強制再読み込みを掛ける
 		var isSame = string.Equals(vsParam.Voice, _voiceName, StringComparison.Ordinal);
-		return isSame ? currentParameter : CreateVoiceParameter();
+		if (!isSame)
+		{
+			return CreateVoiceParameter();
+		}
+
+		// 声質が同じでも、プリセットリストを最新のものに更新する
+		var hasPresets = VoiSonaTalkSettings.Default.SpeakersPresets
+			.TryGetValue(_voiceName, out var savedPresets);
+
+		if (hasPresets && savedPresets is not null)
+		{
+			vsParam.Preset = [..savedPresets];
+		}
+
+		return vsParam;
 	}
 
 	protected virtual void Dispose(bool disposing)
